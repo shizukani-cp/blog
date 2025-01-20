@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="公開したくないけどデバイス間でコードを共有したいときのための(クソ)アプリの使い方・作り方">
+  <meta property="og:title" content="公開したくないけどデバイス間でコードを共有したいときのための(クソ)アプリ | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20251120">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>公開したくないけどデバイス間でコードを共有したいときのための(クソ)アプリ | 静カニのブログ</title>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../index.html">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>公開したくないけどデバイス間でコードを共有したいときのための(クソ)アプリ</h1>
+<p>プライベートで2つ以上デバイスを持っているとき、動かないなどで公開したくないけど、とりあえず共有したい、そんなこと、ありませんかね？<br />
+というわけで、作ってみました。</p>
+<h2>技術的概要</h2>
+<p>サーバー…cloudflare workers<br />
+データベース…cloudflare D1<br />
+ローカルのクライアント…python(気合)<br />
+なんか気合とかいう不穏な文字が見えた方、それは嘘です。
+ちなみにですが、このアプリにはcloudflare workersの試運転というのも兼ねてたりします。</p>
+<h2>使い方</h2>
+<p>デプロイはしていますが、アクセスされまくったら余裕で無料枠を超えるので、URLは公開しないでおきます。
+ですが、作り方はしっかり下に書いてあるので、そっちを参照してください。
+で、とりあえずヘルプを見るまではこちら。</p>
+<pre><code class="language-bash">git clone https://github.com/shizukani-cp/tmp-code-share.git
+cd tmp-code-share
+uv sync
+uv run python app.py -h
+</code></pre>
+<p>こうやってみると、argparseの力は偉大ですね。<br />
+…とここまで書いて気付いたのですが、.envを書かないと-hだけでもエラー吐きますね。
+ということで、.envの例も書いておきます。もちろん、実際のURLやAPIキーは書いていませんよ。</p>
+<pre><code class="language-env">TMP_FILE_SHARE_BASE_URL=&quot;https://tmp-code-share.your-user-name.workers.dev/&quot;
+TMP_FILE_SHARE_API_KEY=&quot;your-random-string&quot;
+</code></pre>
+<h2>作り方</h2>
+<p>まずは、cloudflareに登録して、tmp-code-shareという名前でworkerを作りましょう。
+そしたら、コードを編集するボタンなり、アイコン(みたいなやつ)なりがあるはずなので、そっちを押してもらって、以下のコードを入力します。</p>
+<pre><code class="language-worker.js">export default {
+  async fetch(request, env) {
+    if (request.headers.get('Authorization') !== `Bearer ${env.API_KEY}`) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    const url = new URL(request.url);
+    const path = decodeURIComponent(url.pathname);
+
+    switch (request.method) {
+      case 'GET':
+        return this.handleGet(env, path);
+      case 'POST':
+        return this.handlePost(request, env, path);
+      case 'PUT':
+        return this.handlePut(request, env, path);
+      case 'DELETE':
+        return this.handleDelete(env, path);
+      default:
+        return new Response('Method not allowed', { status: 405 });
+    }
+  },
+
+  async handleGet(env, path) {
+    const { results } = await env.DB.prepare(
+      'SELECT * FROM files WHERE path = ?'
+    ).bind(path).all();
+
+    if (results.length === 0) {
+      return new Response('Not found', { status: 404 });
+    }
+
+    const file = results[0];
+    if (file.is_directory) {
+      const { results: children } = await env.DB.prepare(
+        &quot;SELECT * FROM files WHERE path LIKE ? || '%' AND path != ?&quot;
+      ).bind(path === '/' ? '' : path, path).all();
+
+      const directoryContents = {
+        path: file.path,
+        is_directory: true,
+        children: children.map(child =&gt; ({
+          path: child.path,
+          is_directory: child.is_directory,
+          content: child.is_directory ? null : child.content
+        }))
+      };
+
+      return new Response(JSON.stringify(directoryContents), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } else {
+      return new Response(file.content, {
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    }
+  },
+
+  async handlePost(request, env, path) {
+    const content = await request.text();
+    const isDirectory = path.endsWith('/');
+
+    try {
+      await env.DB.prepare(
+        'INSERT INTO files (path, content, is_directory) VALUES (?, ?, ?)'
+      ).bind(path, isDirectory ? null : content, isDirectory ? 1 : 0).run();
+      return new Response('Created', { status: 201 });
+    } catch (error) {
+      return new Response('Internal Server Error', { status: 500 });
+    }
+  },
+
+  async handlePut(request, env, path) {
+    const content = await request.text();
+
+    try {
+      const { results } = await env.DB.prepare(
+        'UPDATE files SET content = ?, updated_at = CURRENT_TIMESTAMP WHERE path = ? AND is_directory = 0'
+      ).bind(content, path).run();
+
+      if (results.changes === 0) {
+        return new Response('Not found', { status: 404 });
+      }
+      return new Response('Updated', { status: 200 });
+    } catch (error) {
+      return new Response('Internal Server Error', { status: 500 });
+    }
+  },
+
+  async handleDelete(env, path) {
+    try {
+      if (path.endsWith('/')) {
+        const { results } = await env.DB.prepare(
+          &quot;DELETE FROM files WHERE path LIKE ?&quot;
+        ).bind(path + '%').run();
+
+        if (results.changes === 0) {
+          return new Response('Not found', { status: 404 });
+        }
+      } else {
+        const { results } = await env.DB.prepare(
+          'DELETE FROM files WHERE path = ?'
+        ).bind(path).run();
+
+        if (results.changes === 0) {
+          return new Response('Not found', { status: 404 });
+        }
+      }
+
+      return new Response('Deleted', { status: 200 });
+    } catch (error) {
+      return new Response('Internal Server Error', { status: 500 });
+    }
+  }
+};
+</code></pre>
+<p>そしたらデプロイボタンを押します。これでコードは完了です。
+次に、DBらへんをいじっていきます。<br />
+まずは、D1のページにアクセスしましょう。たぶん「https://dash.cloudflare.com/<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong>****/workers/d1」の形式になっています。
+そこで、「+作成」ボタンを押してもらって、「tmp-code-share-db」とでも名前をつけて作成しましょう。
+で、上側の「コンソール」を押してコンソールタブを開いたら、次のSQL文を実行してください。</p>
+<pre><code class="language-SQL">CREATE TABLE files (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  path TEXT NOT NULL UNIQUE,
+  content TEXT,
+  is_directory BOOLEAN NOT NULL DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+</code></pre>
+<p>改行がなくても普通に実行できるので、気にしなくていいです。
+次に、このDBとworkerをつなげましょう。
+つなげないと使えませんからね。
+workerのページ(https://dash.cloudflare.com/<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*/workers/services/view/tmp-code-share/productionの形式)を開いて、設定のタブへ行きます。
+その中の、「バインディング」という項目を探して、「+作成」ボタン→「D1 データベース」と押します。
+変数名は「DB」にして、D1 データベースのところにはさっきの「tmp-code-share-db」を選択しておきます。
+そして、展開ボタンを押します。これで、やっとDBとworkerをつなげます。<br />
+ここまでくればあともう一息です。さっきの「バインディング」の上の変数とシークレットを探します。
+そして、「+追加」ボタンを押しましょう。「タイプ」はシークレットを選んでください。
+特に絶対というわけではないのですが、APIキーを入れるので、シークレットにしておく方が気持ち的には安全だと思います。
+「変数名」は「API_KEY」にして、最後の値に関しては、自分でランダム文字列を適当に生成して格納してください。
+そして、「展開」ボタンを…と行きたいところですが、 </em>*今の文字列は展開すると見れなくなる</strong> ので、今のうちにメモっておきましょう。
+メモリ終わりましたか？では、「展開」ボタンを押してください。これで、サーバー側が完成しました。<br />
+最後に、さっきの「使い方」に書いてあるものを(ちゃんと.envを修正して)試して、エラーがなかったら成功です!</p>
+<h2>最後に</h2>
+<p>こういうアプリって、ほかの人が作ったものを使うよりもロマンがあるんで、いいんですよねぇ。</p>
+    <button class="button back-next"
+      onclick="location.href = 'https://shizukani-cp.github.io/blog/articles/20250119/'">前の記事</button>
+    <button class="button back-next"
+      onclick="location.href = 'https://shizukani-cp.github.io/blog/articles/20250124/'">次の記事</button>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+</body>
+
+</html>
