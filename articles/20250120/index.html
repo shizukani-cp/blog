@@ -49,7 +49,7 @@
 <p>デプロイはしていますが、アクセスされまくったら余裕で無料枠を超えるので、URLは公開しないでおきます。
 ですが、作り方はしっかり下に書いてあるので、そっちを参照してください。
 で、とりあえずヘルプを見るまではこちら。</p>
-<pre><code class="language-bash">git clone https://github.com/shizukani-cp/tmp-code-share.git
+<pre><code class="language-sh">git clone https://github.com/shizukani-cp/tmp-code-share.git
 cd tmp-code-share
 uv sync
 uv run python app.py -h
@@ -63,7 +63,7 @@ TMP_FILE_SHARE_API_KEY=&quot;your-random-string&quot;
 <h2>作り方</h2>
 <p>まずは、cloudflareに登録して、tmp-code-shareという名前でworkerを作りましょう。
 そしたら、コードを編集するボタンなり、アイコン(みたいなやつ)なりがあるはずなので、そっちを押してもらって、以下のコードを入力します。</p>
-<pre><code class="language-worker.js">export default {
+<pre><code class="language-javascript">export default {
   async fetch(request, env) {
     if (request.headers.get('Authorization') !== `Bearer ${env.API_KEY}`) {
       return new Response('Unauthorized', { status: 401 });
@@ -181,7 +181,7 @@ TMP_FILE_SHARE_API_KEY=&quot;your-random-string&quot;
 </code></pre>
 <p>そしたらデプロイボタンを押します。これでコードは完了です。
 次に、DBらへんをいじっていきます。<br />
-まずは、D1のページにアクセスしましょう。たぶん「https://dash.cloudflare.com/<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong>****/workers/d1」の形式になっています。
+まずは、D1のページにアクセスしましょう。たぶん<code>https://dash.cloudflare.com/********************************/workers/d1</code>の形式になっています。
 そこで、「+作成」ボタンを押してもらって、「tmp-code-share-db」とでも名前をつけて作成しましょう。
 で、上側の「コンソール」を押してコンソールタブを開いたら、次のSQL文を実行してください。</p>
 <pre><code class="language-SQL">CREATE TABLE files (
@@ -196,7 +196,7 @@ TMP_FILE_SHARE_API_KEY=&quot;your-random-string&quot;
 <p>改行がなくても普通に実行できるので、気にしなくていいです。
 次に、このDBとworkerをつなげましょう。
 つなげないと使えませんからね。
-workerのページ(https://dash.cloudflare.com/<strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*</em></strong><strong><em>*/workers/services/view/tmp-code-share/productionの形式)を開いて、設定のタブへ行きます。
+workerのページ(<code>https://dash.cloudflare.com/********************************/workers/services/view/tmp-code-share/production</code>の形式)を開いて、設定のタブへ行きます。
 その中の、「バインディング」という項目を探して、「+作成」ボタン→「D1 データベース」と押します。
 変数名は「DB」にして、D1 データベースのところにはさっきの「tmp-code-share-db」を選択しておきます。
 そして、展開ボタンを押します。これで、やっとDBとworkerをつなげます。<br />
@@ -204,15 +204,11 @@ workerのページ(https://dash.cloudflare.com/<strong><em>*</em></strong><stron
 そして、「+追加」ボタンを押しましょう。「タイプ」はシークレットを選んでください。
 特に絶対というわけではないのですが、APIキーを入れるので、シークレットにしておく方が気持ち的には安全だと思います。
 「変数名」は「API_KEY」にして、最後の値に関しては、自分でランダム文字列を適当に生成して格納してください。
-そして、「展開」ボタンを…と行きたいところですが、 </em>*今の文字列は展開すると見れなくなる</strong> ので、今のうちにメモっておきましょう。
+そして、「展開」ボタンを…と行きたいところですが、 <strong>今の文字列は展開すると見れなくなる</strong> ので、今のうちにメモっておきましょう。
 メモリ終わりましたか？では、「展開」ボタンを押してください。これで、サーバー側が完成しました。<br />
 最後に、さっきの「使い方」に書いてあるものを(ちゃんと.envを修正して)試して、エラーがなかったら成功です!</p>
 <h2>最後に</h2>
 <p>こういうアプリって、ほかの人が作ったものを使うよりもロマンがあるんで、いいんですよねぇ。</p>
-    <button class="button back-next"
-      onclick="location.href = 'https://shizukani-cp.github.io/blog/articles/20250119/'">前の記事</button>
-    <button class="button back-next"
-      onclick="location.href = 'https://shizukani-cp.github.io/blog/articles/20250124/'">次の記事</button>
   </main>
   <aside id="sidebar">
     <div id="index"></div>
@@ -224,6 +220,8 @@ workerのページ(https://dash.cloudflare.com/<strong><em>*</em></strong><stron
     <p>&copy; 2024 shizukani-cp</p>
   </footer>
   <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
 </body>
 
 </html>
