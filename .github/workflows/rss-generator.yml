@@ -3,7 +3,7 @@ name: Generate and Deploy RSS Feed
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
