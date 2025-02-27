@@ -14,7 +14,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate RSS feed
-      uses: jonohill/rss-generator-action@v1
+      uses: actions/gauntface/rss-generator-action@v1
       with:
         FEED_TITLE: "静カニのブログ"
         FEED_DESCRIPTION: "静カニ(shizukani-cp)のブログです。雑多なことを投稿しています。"
@@ -22,6 +22,14 @@ jobs:
         FEED_PATH: "rss.xml"
         BASE_URL: "https://shizukani-cp.github.io/blog/"
         POSTS_DIR: "articles/"
+
+    - name: Commit and push RSS feed
+      run: |
+        git config --local user.name "github-actions[bot]"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git add rss.xml
+        git commit -m "Generate RSS feed"
+        git push
 
     - name: Set up GitHub Pages
       uses: actions/configure-pages@v1
