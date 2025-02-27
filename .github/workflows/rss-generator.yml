@@ -1,0 +1,47 @@
+name: Generate and Deploy RSS Feed
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Generate RSS feed
+      uses: jonohill/rss-generator-action@v1
+      with:
+        FEED_TITLE: "静カニのブログ"
+        FEED_DESCRIPTION: "静カニ(shizukani-cp)のブログです。雑多なことを投稿しています。"
+        FEED_URL: "https://shizukani-cp.github.io/blog/rss.xml"
+        FEED_PATH: "rss.xml"
+        BASE_URL: "https://shizukani-cp.github.io/blog/"
+        POSTS_DIR: "articles/"
+
+    - name: Set up GitHub Pages
+      uses: actions/configure-pages@v1
+
+    - name: Upload artifact to GitHub Pages
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: 'rss.xml'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
