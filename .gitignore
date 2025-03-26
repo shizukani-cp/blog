@@ -1,4 +1,4 @@
 template.*
 *.md
 *config*
-gen.bat
+gen.sh
