@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="Gemini-CLIが出たこととそれに関するプラグインを作った話です。">
+  <meta property="og:title" content="Gemini-CLI&gemini.nvim | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250714">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>Gemini-CLI&gemini.nvim | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Gemini-CLI&amp;gemini.nvim</h1>
+<p>※この記事は<a href="https://vim-jp.org/ekiden/">Vim駅伝</a>の373本目の記事です。前回の記事は<a href="https://github.com/i9wa4">uma-chan</a>さんの<a href="https://i9wa4.github.io/blog/2025-07-14-my-first-vim-contribution.html">Vimへの初コントリビューションの経緯と学び</a>です。<br />
+最近、Gemini-CLIが出ましたね。なんだか自作でAIエージェントを作ろうと思っていたのを馬鹿馬鹿しく感じてしまいました。
+それぐらい、自分的には衝撃を受けました。</p>
+<h2>Gemini-CLIの機能について</h2>
+<p>とりあえず、<code>npm install -g @google/gemini-cli</code>でインストールして、<code>gemini</code>で起動できます。</p>
+<h3>すごいと思った点</h3>
+<ul>
+<li>ほぼ使い放題<br />
+    一日の制限は1000回ぐらいだったので、よほどのことがない限り使い終わりません。  </li>
+<li>ファイル読み書き可能<br />
+    aiderでもできますが、私の環境だとエラーを吐いてしまったので、何気に嬉しいです。<br />
+    ちなみにaiderがエラーを吐いたせいで、自作AIエージェントを作ろうとしはじめました。  </li>
+<li>Google検索とかできる<br />
+    これに関してはaiderでもできない。正直快挙。ただし今の所使っている場面は見られなかった。<br />
+こんな感じです。</li>
+</ul>
+<h3>ちょっとなぁと思った点</h3>
+<p>neovim用のプラグインがない。<br />
+これに尽きます。じゃぁ、どうしましょう。ここで作るのがエンジニアです(異論は認めます)。</p>
+<h2>gemini.nvim</h2>
+<p>というわけで、作りました。Gemini-CLIのNeovim用プラグイン。<a href="https://github.com/shizukani-cp/gemini.nvim">こいつ</a>です。<br />
+ここからは、技術的な詳細を書いていきます。<br />
+ベースは、普段お世話になっていた<a href="https://github.com//aider.nvim">aider.nvim</a>です。Gemini-CLIを見た瞬間に、「aider.nvimのaiderをgeminiに変えれば一瞬でプラグインできるぞ!」と思っていたのです。なので、aider.nvimの作者の<a href="https://github.com/"></a>さんには感謝です。
+そして、その改造、Gemini-CLIにやってもらいました。つまり、Gemini-CLIのためのプラグインをGemini-CLIに書かせました。
+経緯としてはこんな感じです。
+そしてこちら、なんと私史上初の自作neovimプラグインです。ちなみに昔、vimで強制シーザー暗号プログラミングさせられるネタプラグインを作ろうとしたのですが、失敗しました。
+にしても、「必要は発明の母」ですね。名言は身近にあるものです。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

@@ -248,5 +248,14 @@
     <guid>5ec37f8ece11ce4f97c5212f7a46ce001689974deea65311ac8f22a9e15c69ab</guid>
 </item>
 
+
+<item>
+    <title>Gemini-CLI&gemini.nvim</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250714</link>
+    <description>Gemini-CLIが出たこととそれに関するプラグインを作った話です。</description>
+    <pubDate>2025-07-14 00:00:00</pubDate>
+    <guid>8c6c772120652d16c45c519aa723bb821adc317d9eec854f2e036c2358a9f0ca</guid>
+</item>
+
 </channel>
 </rss>
