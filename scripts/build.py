@@ -73,7 +73,7 @@ class Article:
 
     def copy_files(self):
         date = self.config["date"]
-        src_pattern = os.path.join("articles", date, "*")
+        src_pattern = os.path.join("articles", str(date), "*")
         files = glob.glob(src_pattern)
 
         for src_path in files:
