@@ -66,7 +66,7 @@ class Article:
 
     def html_save(self, template: Template):
         file_path = self._get_html_file_name()
-        file_path.parent.mkdir(parents=False, exist_ok=False)
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         print("saving", str(self.filepath))
         with open(file_path, "w", encoding=ENCODE) as f:
             f.write(self._to_html_with_template(template))
