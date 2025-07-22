@@ -62,7 +62,7 @@ class Article:
                                config=self.config)
 
     def _get_html_file_name(self) -> Path :
-        return Path("docs" / (str(self.filepath.parent / self.filepath.stem) + ".html"))
+        return Path(Path("docs") / (str(self.filepath.parent / self.filepath.stem) + ".html"))
 
     def html_save(self, template: Template):
         print("saving", str(self.filepath))
