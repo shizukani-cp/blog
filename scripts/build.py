@@ -62,7 +62,7 @@ class Article:
                                config=self.config)
 
     def _get_html_file_name(self) -> Path :
-        return Path("public" / (str(self.filepath.parent / self.filepath.stem) + ".html"))
+        return Path("docs" / (str(self.filepath.parent / self.filepath.stem) + ".html"))
 
     def html_save(self, template: Template):
         print("saving", str(self.filepath))
@@ -82,7 +82,7 @@ class Article:
                 continue
 
             rel_path = os.path.relpath(src_path, "articles")
-            dest_path = os.path.join("public", "articles", rel_path)
+            dest_path = os.path.join("docs", "articles", rel_path)
 
             os.makedirs(os.path.dirname(dest_path), exist_ok=True)
             shutil.copy2(src_path, dest_path)
