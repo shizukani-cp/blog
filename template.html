@@ -4,16 +4,18 @@
 <head>
   <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
   <link rel="stylesheet" href="../../styles/style.css">
-  
+  {% if config.use_prism %}
+  <link rel="stylesheet" href="../../styles/prism.css">
+  {% endif %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <meta name="description" content="静カニの自己紹介の記事">
-  <meta property="og:title" content="自己紹介 | 静カニのブログ">
+  <meta name="description" content="{{ config.description }}">
+  <meta property="og:title" content="{{ config.title }} | 静カニのブログ">
   <meta property="og:site_name" content="静カニのブログ">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20240803">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/{{ config.date }}">
   <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
-  <title>自己紹介 | 静カニのブログ</title>
+  <title>{{ config.title }} | 静カニのブログ</title>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
   <script>
@@ -26,7 +28,9 @@
 </head>
 
 <body>
-  
+  {% if config.use_prism %}
+  <script src="../../scripts/prism.js"></script>
+  {% endif %}
   <header>
     <a href="../../">
       <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
@@ -41,14 +45,7 @@
     </nav>
   </header>
   <main>
-    <h1>自己紹介</h1>
-<p>日曜プログラマー以下のことしかできない(自虐)、静カニです。<br />
-主な対応分野は、Python、Rustですが、学校のPCなどの規制環境下でもプログラミングができるように、HTML、CSS、JavaScriptも扱えます。<br />
-ただ、その時々でgitの話が出たりもします。<br />
-たまに誤った情報を書くこともあるかもしれないので、そのときはこのブログのリポジトリ(<a href="https://github.com/shizukani-cp/blog">https://github.com/shizukani-cp/blog</a>)にIssueやPull requestで教えてください。<br />
-ちなみに身長は3mm、体重は3mg、年齢は138億歳です。<br />
-イベントに参加するときは未来の記事を公開してたりするので、ご容赦ください。<br />
-vim-jpのslackに参加してます。<a href="https://app.slack.com/client/T03C4RC8V/C087RBB9HB3">#times-shizukani-cp</a></p>
+    {{ content }}
   </main>
   <aside id="sidebar">
     <div id="index"></div>

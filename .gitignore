@@ -1,4 +1,1 @@
-template.*
-*.md
-*config*
-gen.sh
+tmp/
