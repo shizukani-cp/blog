@@ -65,8 +65,10 @@ class Article:
         return Path(Path("docs") / (str(self.filepath.parent / self.filepath.stem) + ".html"))
 
     def html_save(self, template: Template):
+        file_path = self._get_html_file_name()
+        file_path.parent.mkdir(parents=False, exist_ok=False)
         print("saving", str(self.filepath))
-        with open(self._get_html_file_name(), "w", encoding=ENCODE) as f:
+        with open(file_path, "w", encoding=ENCODE) as f:
             f.write(self._to_html_with_template(template))
 
     def copy_files(self):
