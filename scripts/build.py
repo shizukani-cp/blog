@@ -156,7 +156,7 @@ def execute(arg):
     with open(Path(arg.top_dir) / "sitemap.xml", "w", encoding=ENCODE) as f:
         f.write(SITEMAP_TEMPLATE.format(items="\n".join([article.get_sitemap() for article in articles])))
 
-def main():
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--top_dir", default=".")
