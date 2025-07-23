@@ -9,7 +9,7 @@ on:
 
 jobs:
   Deploy:
-    name: python
+    name: deploy
     runs-on: ubuntu-latest
 
     steps:
