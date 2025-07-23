@@ -12,5 +12,8 @@ use_prism: false
 ## 今
 とりあえずRustで[md2html](https://github.com/shizukani-cp/md2html.git)というツールを気合いで作って、それを使うことにしました。なので、使い方を見ればあるだろうと推測できますが、contentsフォルダーの直下にtemplate.htmlがいたり、それぞれの記事のフォルダーにentry.mdがいたりします。
 ## 2024/12/24追記
-md2htmlだと説明分をHTMLにするたびに書かなくてはならず、面倒だったため、[blog_manage](https://github.com/shizukani-cp/blog_manage.git)というツールをつくりました。  
+md2htmlだと説明文をHTMLにするたびに書かなくてはならず、面倒だったため、[blog_manage](https://github.com/shizukani-cp/blog_manage.git)というツールをつくりました。  
 箇条書きがうまくいっていなかったりするのですが、とりあえずどうにかなっています。
+## 2025/07/23追記
+blog_manageだとローカルでビルドを実行する必要があったり、ソースになるmarkdownと出力結果のHTMLが衝突する懸念があったりで、markdownの方がGit管理できていなかったのですが、Github Actionsでサーバー側でビルドできるようになったので、出力先をdocsにしてpublic的な用途で使うことで、ゴリ押しでやっています。
+ちなみにmarkdownからHTMLへの変換のコアはblog_manageと変わっていないので、箇条書きできない問題は今でも放置になっています。
