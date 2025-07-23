@@ -27,6 +27,10 @@ main {
   width: 49%;
 }
 
+.date-right {
+  float: right;
+}
+
 aside#sidebar {
   position: fixed;
   right: 0;
