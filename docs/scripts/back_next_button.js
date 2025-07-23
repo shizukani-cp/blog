@@ -1,4 +1,4 @@
-const main = document.querySelector("main");
+const button_area = document.createElement("div");
 
 const date_re = new RegExp("(?<=/articles/)\\d{8}(?=/)");
 const date = parseInt(location.pathname.match(date_re)[0]);
@@ -15,7 +15,7 @@ const entry_index = articles.findIndex((e) => { return e.date === date; });
   back_button.onclick = () => {
     location.href = `../${articles[index].date}/`;
   };
-  main.appendChild(back_button);
+  button_area.appendChild(back_button);
 }
 
 {
@@ -27,5 +27,7 @@ const entry_index = articles.findIndex((e) => { return e.date === date; });
   next_button.onclick = () => {
     location.href = `../${articles[index].date}/`;
   };
-  main.appendChild(next_button);
+  button_area.appendChild(next_button);
 }
+
+document.querySelector("footer").prepend(button_area);
