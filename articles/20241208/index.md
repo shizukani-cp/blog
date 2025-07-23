@@ -4,7 +4,6 @@ title: "親子丼が本当に親子である確率"
 date: 20241208
 use_prism: false
 ---
-# 親子丼が本当に親子である確率
 ## 概要
 親子丼を食べていたら、親子丼が本当に親子である確率が気になったので、記事にしてみました。  
 計算方法などが間違っているかもしれないので、その時は[Issue](https://github.com/shizukani-cp/blog/issues)や[Pull requests](https://github.com/shizukani-cp/blog/pulls)に送ってください。コメント欄という概念がないんです…すみません。  

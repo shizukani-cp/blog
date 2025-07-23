@@ -4,7 +4,6 @@ title: "静カニ VS vim"
 date: 20241129
 use_prism: false
 ---
-# 静カニ VS vim
 ## この記事について
 この記事は、[Vim駅伝](https://vim-jp.org/ekiden/)の275本目の記事です。前回の記事はatusyさんによる[mini.aiで日本語の括弧の中身をrepeatableに編集する](https://blog.atusy.net/2024/11/27/mini-ai-ja/)でした。  
 自分に比べて技術のレベルが高くて「すごいなぁ…」としか言えませんでした。  

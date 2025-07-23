@@ -4,7 +4,6 @@ title: "vimのコミュニティに参加して思ったこと"
 date: 20250207
 use_prism: false
 ---
-# vimのコミュニティに参加して思ったこと
 ※この記事は、[vim駅伝](https://vim-jp.org/ekiden/)の305回の記事です。前回の記事は、taketsさんの[ファイル切り替えを楽にする vim-rule-switcherプラグイン](https://zenn.dev/takets/articles/eab18374e758f5)でした。
 ## 出会い
 Qiitaで記事を巡回していたところ、vim駅伝の記事に当たりました。

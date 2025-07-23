@@ -4,7 +4,6 @@ title: "vimiumはいいぞ"
 date: 20250110
 use_prism: true
 ---
-# vimiumはいいぞ
 ## この記事について
 この記事は、[Vim駅伝](https://vim-jp.org/ekiden/)の293本目の記事です。あと二週間ぐらいで300本！  
 ちなみに、前回は[tositada](https://github.com/tositada17/)さんの[lazyvimに2ヶ月入って、vscodeに戻ってみる。](https://zenn.dev/tositada/articles/b57f06b83848f8)です。  

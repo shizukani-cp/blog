@@ -4,7 +4,6 @@ title: "DeepseekとOpenAIに対する印象があんまりよくない"
 date: 20250204
 use_prism: false
 ---
-# DeepseekとOpenAIに対する印象があんまりよくない
 突然ですが、私はDeepseekとOpenAIがちょっと嫌いです。それぞれの理由について、書き散らしていきます。
 ## Deepseek
 Deepseekについてですが、まずはちょっと中国政府の監視が怖いというところがあります。  

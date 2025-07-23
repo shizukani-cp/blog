@@ -4,7 +4,6 @@ title: "シュレディンガーのyasunori"
 date: 20250214
 use_prism: false
 ---
-# シュレディンガーのyasunori
 タイトルの意味はとりあえず下を見てもらえばわかると思います。
 ![slack](slack_screen.png)
 つまり、slackからの通知がvim-jpの通知であったとき、その通知はyasunoriかそうでないかになるという意味なのですが、

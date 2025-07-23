@@ -4,7 +4,6 @@ title: "vimmerになった"
 date: 20250331
 use_prism: true
 ---
-# vimmerになった
 こんにちは。静カニです。約1週間ほど前、私はhelixからneovimに乗り換えて、vimmerになりました。今回は、この理由を書いていきます。  
 あとなんとなく今入れてるプラグインも書いておきます。
 ※この記事は、[vim駅伝](https://vim-jp.org/ekiden/)の327本目の記事です。前回の記事は、[yuys13さん](https://github.com/yuys13/)の[Neovim luaのテストを書こう。neotestで高速に修正🔁テストのサイクルを回す](https://zenn.dev/vim_jp/articles/nvim-test-with-neotest-plenary)です。

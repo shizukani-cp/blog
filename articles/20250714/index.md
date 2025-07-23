@@ -4,7 +4,6 @@ description: "Gemini-CLIが出たこととそれに関するプラグインを�
 date: 20250714
 use_prism: false
 ---
-# Gemini-CLI&gemini.nvim
 最近、Gemini-CLIが出ましたね。なんだか自作でAIエージェントを作ろうと思っていたのを馬鹿馬鹿しく感じてしまいました。
 それぐらい、自分的には衝撃を受けました。
 ## Gemini-CLIの機能について

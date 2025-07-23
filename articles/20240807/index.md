@@ -4,7 +4,6 @@ title: "githubにpushしようとしたらできなかった話"
 date: 20240807
 use_prism: true
 ---
-# githubにpushしようとしたらできなかった話
 ## まえがき・経緯
 こんにちは、静カニです。  
 この間、gensimのWord2Vecを使ってプログラムを作っていた時に、モデルも追跡対象に入れていました。  

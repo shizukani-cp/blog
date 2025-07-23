@@ -4,7 +4,6 @@ title: "vim licenseについて調べる"
 date: 20250124
 use_prism: true
 ---
-# vim licenseについて調べる
 ※この記事は[vim駅伝](https://vim-jp.org/ekiden/)の299本目の記事です。前回の記事は[@thinca](https://github.com/thinca)さんの[Meguro.vim #27 を開催しました](https://thinca.hatenablog.com/entry/2025/01/megurovim-27)です。次回でで300本!  
 この間なんとなく[vimのリポジトリ](https://github.com/vim/vim)を見ていてふとライセンスを見たら、「Vim License」と書いてありました。
 そんなライセンスを知らなかったので、いろいろ見つつ解説していきます。  
