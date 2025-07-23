@@ -24,21 +24,22 @@ helixは、挿入モード、選択モード、ノーマルモードなどがあ
 ですが、これが私がhelixからneovimに移った理由です。ちなみにvimじゃなくてneovimにしたのは特に意味はありません。
 ## 今入れているプラグイン
 話はちょっと逸れて、執筆時点(2025/03/26日現在)入れているプラグインを紹介します。ちなみに依存関係で入っているものは紹介してません。  
-- lazy.nvim…プラグイン管理  
-- folke/tokyonight.nvim…最近よく使っているtokyonightのテーマ  
-- nvim-neo-tree/neo-tree.nvim…ファイルツリー。nerdtreeじゃなくてこっちにした理由は覚えてない。helixのSpace+f相当  
-- j-morano/buffer_manager.nvim…その名の通りバッファーマネージャ。helixのSpace+b相当  
-- hrsh7th/nvim-cmp…LSP使用時の補完用。neovim/nvim-lspconfig・mason.nvimあたりも入ってますが省略。  
-- nvim-lualine/lualine.nvim…知ってる人も多い、下のステータスバーを改造できる。自分でもsectionいじった。  
-- norcalli/nvim-colorizer.nvim…CSSとかでカラーコードとかを入れると表示してくれる。まだ使ったことない。  
-- numToStr/Comment.nvim…コメントをしたり外したりしてくれる。画像に写ってないけどhelixのSpace+c相当。  
-- windwp/nvim-autopairs…括弧とかクオートとかを片方入力するともう片方も入力してくれる。inoremapとかよりも高性能。  
-- petertriho/nvim-scrollbar…右側にちっちゃいスクロールバーを追加してくれる。行数が多いファイルとかだと地味にありがたい。  
-- lewis6991/gitsigns.nvim…行ごとのgitのステータスを表示したりしてくれる。さっきのnvim-scrollbarと連携ができるから導入した。このおかげで数日でairblade/vim-gitgutterがクビになった。  
-- j-hui/fidget.nvim…右下にLSPの起動状況とかを表示してくれる。地味にありがたい。  
-- stevearc/aerial.nvim…コード中のオブジェクトを表示してくれる。シンボルピッカーとは違うけど、helixのSpace+sとして使ってる。  
-- MeanderingProgrammer/render-markdown.nvim…markdownを開いているときにうまく装飾してくれる。挿入モードの時は働かないから書くときは邪魔にならない。ちなみに書いている途中にカーソルを合わせてもそこの部分だけ働かなくなることに気づいた。  
-- jghauser/mkdir.nvim…存在しないディレクトリの中のファイルを開いたときに、自動的にディレクトリを保存してくれる。意外と使うシチュエーションが多い  
+
+- lazy.nvim…プラグイン管理
+- folke/tokyonight.nvim…最近よく使っているtokyonightのテーマ
+- nvim-neo-tree/neo-tree.nvim…ファイルツリー。nerdtreeじゃなくてこっちにした理由は覚えてない。helixのSpace+f相当
+- j-morano/buffer_manager.nvim…その名の通りバッファーマネージャ。helixのSpace+b相当 
+- hrsh7th/nvim-cmp…LSP使用時の補完用。neovim/nvim-lspconfig・mason.nvimあたりも入ってますが省略。
+- nvim-lualine/lualine.nvim…知ってる人も多い、下のステータスバーを改造できる。自分でもsectionいじった。
+- norcalli/nvim-colorizer.nvim…CSSとかでカラーコードとかを入れると表示してくれる。まだ使ったことない。 
+- numToStr/Comment.nvim…コメントをしたり外したりしてくれる。画像に写ってないけどhelixのSpace+c相当。
+- windwp/nvim-autopairs…括弧とかクオートとかを片方入力するともう片方も入力してくれる。inoremapとかよりも高性能。
+- petertriho/nvim-scrollbar…右側にちっちゃいスクロールバーを追加してくれる。行数が多いファイルとかだと地味にありがたい。
+- lewis6991/gitsigns.nvim…行ごとのgitのステータスを表示したりしてくれる。さっきのnvim-scrollbarと連携ができるから導入した。このおかげで数日でairblade/vim-gitgutterがクビになった。
+- j-hui/fidget.nvim…右下にLSPの起動状況とかを表示してくれる。地味にありがたい。
+- stevearc/aerial.nvim…コード中のオブジェクトを表示してくれる。シンボルピッカーとは違うけど、helixのSpace+sとして使ってる。
+- MeanderingProgrammer/render-markdown.nvim…markdownを開いているときにうまく装飾してくれる。挿入モードの時は働かないから書くときは邪魔にならない。ちなみに書いている途中にカーソルを合わせてもそこの部分だけ働かなくなることに気づいた。
+- jghauser/mkdir.nvim…存在しないディレクトリの中のファイルを開いたときに、自動的にディレクトリを保存してくれる。意外と使うシチュエーションが多い
 ## 最後に
 そのうちdpp.vimとか導入したい!(難しすぎる)  
 neovimの自由度が高すぎる!
