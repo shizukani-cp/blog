@@ -21,13 +21,19 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Switch branch
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global push.autoSetupRemote true
+          git switch -c gh-pages
+          git merge master
+
       - name: Build
         run: uv run scripts/build.py
 
       - name: Deploy
         run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           git add docs/
           git commit -m "Build"
           git push
