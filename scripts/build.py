@@ -134,7 +134,7 @@ SITEMAP_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
 def execute(arg):
 
     if arg.template is None:
-        arg.template = open(Path(arg.top_dir) / "docs" / "template.html", "r", encoding=ENCODE)
+        arg.template = open(Path(arg.top_dir) / "template.html", "r", encoding=ENCODE)
 
     template = load_template(arg.template)
 
