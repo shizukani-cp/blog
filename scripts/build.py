@@ -134,7 +134,7 @@ SITEMAP_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
 def execute(arg):
 
     if arg.template is None:
-        arg.template = open(Path(arg.top_dir) / "template.html", "r", encoding=ENCODE)
+        arg.template = open(Path(arg.top_dir) / "docs" / "template.html", "r", encoding=ENCODE)
 
     template = load_template(arg.template)
 
@@ -149,13 +149,13 @@ def execute(arg):
         article.copy_files()
         configs.append(article.config)
 
-    with open(Path(arg.top_dir) / "scripts" / "articles.json.js", "w", encoding=ENCODE) as f:
+    with open(Path(arg.top_dir) / "docs" / "scripts" / "articles.json.js", "w", encoding=ENCODE) as f:
         f.write(f"window.articles = JSON.parse('{json.dumps(configs, ensure_ascii=False)}');")
 
-    with open(Path(arg.top_dir) / "rss.xml", "w", encoding=ENCODE) as f:
+    with open(Path(arg.top_dir) / "docs" / "rss.xml", "w", encoding=ENCODE) as f:
         f.write(RSS_TEMPLATE.format(items="\n".join([article.get_rss() for article in articles])))
 
-    with open(Path(arg.top_dir) / "sitemap.xml", "w", encoding=ENCODE) as f:
+    with open(Path(arg.top_dir) / "docs" / "sitemap.xml", "w", encoding=ENCODE) as f:
         f.write(SITEMAP_TEMPLATE.format(items="\n".join([article.get_sitemap() for article in articles])))
 
 if __name__ == "__main__":
