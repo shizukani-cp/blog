@@ -3,6 +3,7 @@
 import re, glob, json, hashlib, datetime, sys, argparse, os, shutil
 from pathlib import Path
 from io import StringIO
+from xml.sax.saxutils import escape
 import yaml, markdown
 from jinja2 import Template
 
@@ -91,9 +92,9 @@ class Article:
 
     def get_rss(self):
         return RSS_ITEM_TEMPLATE.format(
-            title=self.config["title"],
+            title=escape(self.config["title"]),
             date=self.config["date"],
-            description=self.config["description"],
+            description=escape(self.config["description"]),
             datetime=datetime.datetime(
                 int(str(self.config["date"])[:4]),
                 int(str(self.config["date"])[4:6]),
