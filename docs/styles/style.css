@@ -48,3 +48,8 @@ a.index {
   text-decoration: none;
   white-space: nowrap;
 }
+
+pre, pre code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
