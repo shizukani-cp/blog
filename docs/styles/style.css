@@ -38,6 +38,18 @@ aside#sidebar {
   overflow: scroll;
 }
 
+a.card {
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 12px 0;
+  text-decoration: none;
+  color: inherit;
+  background: #1e1e1e;
+  transition: background 0.2s;
+}
+
 a.index {
   color: #ffffff;
   text-decoration: none;
