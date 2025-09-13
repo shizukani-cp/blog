@@ -1,6 +1,6 @@
 ---
 title: "全てはDiscordへ(VivaldiからEdgeへの移行第一弾)"
-description: "VivaldiからEdgeに乗り換えるとき、Vivaldiのサイドバーの機能の一つのメール機能をDiscordとGmailを組み合わせてっじゃったろうという記事です。"
+description: "VivaldiからEdgeに乗り換えるとき、Vivaldiのサイドバーの機能の一つのメール機能をDiscordとGmailを組み合わせてやったろうという記事です。"
 date: 20250829
 ---
 こんにちは。静カニです。昔、Edgeを使っていたのですが、カスタマイズ性等々を求めてVivaldiに行きました。
