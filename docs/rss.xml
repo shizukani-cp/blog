@@ -250,11 +250,65 @@
 
 
 <item>
-    <title>Gemini-CLI&gemini.nvim</title>
+    <title>Gemini-CLI&amp;gemini.nvim</title>
     <link>https://shizukani-cp.github.io/blog/articles/20250714</link>
     <description>Gemini-CLIが出たこととそれに関するプラグインを作った話です。</description>
     <pubDate>2025-07-14 00:00:00</pubDate>
     <guid>8c6c772120652d16c45c519aa723bb821adc317d9eec854f2e036c2358a9f0ca</guid>
+</item>
+
+
+<item>
+    <title>無課金プログラマーの開発環境</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250726</link>
+    <description>開発環境に全然課金していない場合でも割とイケるよという話です。</description>
+    <pubDate>2025-07-26 00:00:00</pubDate>
+    <guid>5ee204340aa4212985597894b7f0e3cb2ca1a2073c86fe9748e36140ec1c2a36</guid>
+</item>
+
+
+<item>
+    <title>アウトプットの存在の意義</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250806</link>
+    <description>このブログの開設から1年経ち、このブログにアウトプットしてきたことの意義をまとめてみました。</description>
+    <pubDate>2025-08-06 00:00:00</pubDate>
+    <guid>0a1e3eabb311add9cc241999352add1562bcd356a30cfa12bae019206f1bca48</guid>
+</item>
+
+
+<item>
+    <title>全てはDiscordへ(VivaldiからEdgeへの移行第一弾)</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250829</link>
+    <description>VivaldiからEdgeに乗り換えるとき、Vivaldiのサイドバーの機能の一つのメール機能をDiscordとGmailを組み合わせてやったろうという記事です。</description>
+    <pubDate>2025-08-29 00:00:00</pubDate>
+    <guid>a532fb72a5f58b8e8d7140458a45c152a7a01d5ee3ddc930cff4acc7d9e5a986</guid>
+</item>
+
+
+<item>
+    <title>左にサイドバーがないなら、作ればいいじゃない(VivaldiからEdgeへの移行第二弾)</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250830</link>
+    <description>いつの間にかEdgeでサイドバーを左に置けなくなったので、拡張機能で作ってやった記事です。</description>
+    <pubDate>2025-08-30 00:00:00</pubDate>
+    <guid>ab09b49c6f914622582d6c047019583dd3fb828d92473556df4e22c02b4f4965</guid>
+</item>
+
+
+<item>
+    <title>ブログの細かいところを書くのが面倒臭い！</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250913</link>
+    <description>このブログの具体的な内容を書くのが面倒臭すぎてAIに任せればいいのではとなったので検証してみた記事です。</description>
+    <pubDate>2025-09-13 00:00:00</pubDate>
+    <guid>9722e5c10f0475d8b467a0b3c1a43db36ca359ac74c935484289d5edf626d553</guid>
+</item>
+
+
+<item>
+    <title>読ませる気のなさすぎるプログラミング言語</title>
+    <link>https://shizukani-cp.github.io/blog/articles/20250920</link>
+    <description>読ませる気がなさすぎるプログラミング言語を作った記事です。</description>
+    <pubDate>2025-09-20 00:00:00</pubDate>
+    <guid>7b8a020b87b28992d658d1cfde54ca805aa2d1fb967557c07928d9208b06b56e</guid>
 </item>
 
 </channel>
