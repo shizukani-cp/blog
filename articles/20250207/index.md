@@ -14,7 +14,8 @@ Qiitaで記事を巡回していたところ、vim駅伝の記事に当たりま
 なお、この記事では、このslackをコミュニティとして扱います。
 ## 入った後
 ### 最初
-とりあえず、#lang-python、#lang-rust、#editor-helix、#game-minecraftあたりのチャンネルに参加しました。(※#generalとか#random、#welcomeあたりはデフォで入ってた気がする)
+とりあえず、#lang-python、#lang-rust、#editor-helix、#game-minecraftあたりのチャンネルに参加しました。
+(※#generalとか#random、#welcomeあたりはデフォで入ってた気がする)
 そして、どうやら#times-(自分のユーザー名)なら自由に作っていいらしいので、#times-shizukani-cpを作らせてもらいました。
 
 ここに色々入れていくわけですが、最近は投稿の密度が下がっているという説がありますが、まぁおいておきましょう。

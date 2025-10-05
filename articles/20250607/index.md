@@ -31,4 +31,5 @@ use_prism: false
 
 ちなみに私の体重3mgなら、0.00000286m³（約2.86mL）のヘリウムで十分浮かびます。ペットボトルのキャップにも入る量ですね。
 
-もし計算に誤りを見つけたりした方は、このブログのリポジトリ([https://github.com/shizukani-cp/blog](https://github.com/shizukani-cp/blog))にIssueやPull requestでお知らせください！
+もし計算に誤りを見つけたりした方は、このブログのリポジトリ([https://github.com/shizukani-cp/blog](https://github.com/shizukani-cp/blog))に
+IssueやPull requestでお知らせください！

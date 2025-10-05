@@ -10,7 +10,8 @@ use_prism: false
 
 ただ、その時々でgitの話が出たりもします。
 
-たまに誤った情報を書くこともあるかもしれないので、そのときはこのブログのリポジトリ([https://github.com/shizukani-cp/blog](https://github.com/shizukani-cp/blog))にIssueやPull requestで教えてください。
+たまに誤った情報を書くこともあるかもしれないので、
+そのときはこのブログのリポジトリ([https://github.com/shizukani-cp/blog](https://github.com/shizukani-cp/blog))にIssueやPull requestで教えてください。
 
 ちなみに身長は3mm、体重は3mg、年齢は138億歳です。
 

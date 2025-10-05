@@ -276,7 +276,8 @@ StackOverFlowは皆さんご存じのプログラミングの質問投稿サイ�
 
 StackOverFlowのダンプは、archive.orgの中で7z形式で圧縮されたうえで公開されています。
 
-ちなみに、ライセンスはどうかなと見たところ、WikipediaもStackOverFlowも[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ja)で公開されていたので、大丈夫でした。
+ちなみに、ライセンスはどうかなと見たところ、WikipediaもStackOverFlowも[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ja)で
+公開されていたので、大丈夫でした。
 
 これで、CC BY-SAとCC BY-NC-SAの組み合わせだったら、死んでいたところでした。
 ## 今後

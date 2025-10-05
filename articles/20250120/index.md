@@ -172,7 +172,8 @@ CREATE TABLE files (
 改行がなくても普通に実行できるので、気にしなくていいです。
 次に、このDBとworkerをつなげましょう。
 つなげないと使えませんからね。
-workerのページ(`https://dash.cloudflare.com/********************************/workers/services/view/tmp-code-share/production`の形式)を開いて、設定のタブへ行きます。
+workerのページ(`https://dash.cloudflare.com/********************************/workers/services/view/tmp-code-share/production`の形式)を開いて、
+設定のタブへ行きます。
 その中の、「バインディング」という項目を探して、「+作成」ボタン→「D1 データベース」と押します。
 変数名は「DB」にして、D1 データベースのところにはさっきの「tmp-code-share-db」を選択しておきます。
 そして、展開ボタンを押します。これで、やっとDBとworkerをつなげます。
