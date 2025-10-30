@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="VivaldiからEdgeに乗り換えるとき、Vivaldiのサイドバーの機能の一つのメール機能をDiscordとGmailを組み合わせてやったろうという記事です。">
+  <meta property="og:title" content="全てはDiscordへ(VivaldiからEdgeへの移行第一弾) | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250829">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>全てはDiscordへ(VivaldiからEdgeへの移行第一弾) | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>全てはDiscordへ(VivaldiからEdgeへの移行第一弾)</h1>
+    <p>こんにちは。静カニです。昔、Edgeを使っていたのですが、カスタマイズ性等々を求めてVivaldiに行きました。
+そして、半年ぐらい経ったと思います。Vivaldi、重いです。とっても重い。
+ノートパソコンでブラウザ開きながらAndroidエミュレーターで重い処理をさせて、
+そこでさらにMinecraftをするような人です。ブラウザを軽くするだけでマイクラをするときに快感マシマシになりそうだなぁ。
+ということで、軽いEdgeに帰還することにしました。ですが、Vivaldiは、標準の機能がいっぱいあります。
+それが欲しくて移行したのです(なおそのせいで重くなって戻ることにもなった模様)。
+その中で、戻ってきてかなり大きかったのは、サイドバーから使える機能が大体持っていかれているという事実です。お気に入り以外ないです。
+という訳で、この中のメール機能が必須級だったので、Discordを使って気持ちよくなったという記事です。前置き長いですが本編行きます。</p>
+<h2>メール機能のどこがうれしかったのか</h2>
+<p>私は、メールアドレスを二つ持っているのですが、その両方へのメールが一括で見られるのです。
+これがとてもうれしかった。では、また一括で見たい。どうすればいいでしょうか？
+そういえば、自分専用のDiscordサーバーの「#フィード」チャンネルには、MinecraftのDiscordサーバーに流れてきたものが入っているのみです。
+ここにメールが届いたよという通知を入れてはどうでしょうか。そして、そこにメールへの直接のリンクを置けば、そこから見ることができます。
+という訳で、早速実装していきましょう。</p>
+<h2>作り方</h2>
+<p>まず、私のメールアドレスはどちらもGoogleアカウントなので、Gmailとの連携が強いGASを使っていきます。
+そして、GASとDiscordを連携させるのは、WebHookでGASからDiscordに投稿させることでできます。という訳で、まずはDiscordのWebHookを作りに行きます。</p>
+<h3>Discord側</h3>
+<p>こういう順番でクリック</p>
+<ol>
+<li>チャンネルの名前の一番右にある「チャンネルの編集」という名の設定アイコン</li>
+<li>「連携サービス」</li>
+<li>「ウェブフック」</li>
+<li>「新しいウェブフック」</li>
+<li>新しく出てきたやつ</li>
+<li>「ウェブフックのURLをコピー」
+これでURLのコピーが完了。お好みで名前とアイコンをよしなにしてもいいかも。
+ちなみにここのアイコンを変えても投稿されるものには反映されないけどなぜか名前は反映されます。</li>
+</ol>
+<h3>GAS側</h3>
+<ol>
+<li>スクリプトプロパティに「WEBHOOK_URL」を追加して値をさっきコピーしたやつにする</li>
+<li>以下のスクリプトをコピペする(参考:<a href="https://note.com/lispict/n/n674157c0ebb8">GmailのメッセージをDiscordへ転送する｜いちご</a>)</li>
+</ol>
+<pre><code class="language-javascript">function hook() {
+  const threads = GmailApp.search('is:unread');  // 未読のスレッドを取得
+
+  if (threads.length == 0) {
+    Logger.log('新規メッセージなし');
+    return
+  }
+
+  threads.forEach(function (thread) {
+    const messages = thread.getMessages();
+
+    const payloads = messages.map(function (message) {
+      message.markRead();  // メールを既読に設定する
+
+      const author = message.getFrom();
+      const subject = message.getSubject();
+      const to = extractEmail(message.getTo());
+      const id = message.getId();
+
+      const webhook = getWebhookUrl();
+
+      Logger.log({ author: author, subject: subject, to: to, id: id })
+      const payload = {
+        content: `GMail: https://mail.google.com/mail/u/${to}/#inbox/${id}`,
+        embeds: [{
+          title: subject,
+          author: {
+            name: author,
+          },
+        }],
+      }
+      return {
+        url: webhook,
+        contentType: 'application/json',
+        payload: JSON.stringify(payload),
+        avatar_url: &quot;https://static.vecteezy.com/system/resources/previews/002/557/425/original/google-mail-icon-logo-isolated-on-transparent-background-free-vector.jpg&quot;
+      }
+    })
+
+    Logger.log(payloads);
+    UrlFetchApp.fetchAll(payloads);
+  })
+}
+
+function extractEmail(str) {
+  const emailRegex = /&lt;([^&gt;]+)&gt;/;
+  const match = str.match(emailRegex);
+  return match ? match[1] : null;
+}
+
+function getWebhookUrl() {
+  return  PropertiesService.getScriptProperties().getProperty('WEBHOOK_URL');
+}
+</code></pre>
+<p>これで未読のメールがない場合は未読のメールを適当に作ってやると、Discordのチャンネルの方にメッセージが入ってると思います。
+ちなみにメールの他にこのブログやvim駅伝のRSSも入れたかったのですが、できませんでした。無念。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20250829);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

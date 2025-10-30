@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="色々な移動手段を使って、138億年間移動し続けたら、どれだけ行けるかというものです。">
+  <meta property="og:title" content="138億年でどこまで行ける? | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250218">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>138億年でどこまで行ける? | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>138億年でどこまで行ける?</h1>
+    <p>さて、みなさん、プログラミングや数学の話でよく宇宙開闢からずっと計算しても終わらない…とか言いますよね。
+では、これと同じだけ歩いたり走ったり何だりしたら、どれぐらい移動できるでしょうか。</p>
+<h2>前提</h2>
+<p>数式もどきで書いておきます。</p>
+<pre><code class="language-math">1年 = 365.2422日
+1日 = 24時間
+c(光速) = 300000km/秒 = 1080000000km/時
+宇宙開闢から現在まで = 138億年
+</code></pre>
+<h2>簡単にするために…</h2>
+<p>それぞれのタイミングで計算してもよいのですが、yを進める距離(光年)、xを速さ(時速)として、定式化しておきます。</p>
+<pre><code class="language-math">y = ( x × 24 × 365.2422 × 13800000000 ) ÷ ( 1080000000 × 24 × 365.2422 )
+  = ( x × 13800000000 ) ÷ ( 1080000000 )
+  = x × 115 ÷ 9
+</code></pre>
+<p><code>115 ÷ 9</code>を計算してもいいのですが、xが9の倍数になってキリがよくなってくれることを願っておきます。</p>
+<h2>実際に計算!</h2>
+<p>こっからは実践編です。地球からいった時の星を書こうとしたのですが、Perplexityの調子が悪いのか、徒歩以外あんまりうまくいきませんでした。</p>
+<h5>徒歩</h5>
+<p>大人の歩きは大体時速4kmと言われています。</p>
+<pre><code class="language-math">y = 4 × 115 ÷ 9 ≒ 51
+</code></pre>
+<p>約51光年ですね。結構いけますね。「カストル」という星が近くにあるようです。</p>
+<h5>自転車</h5>
+<p>自転車は時速約15kmです。</p>
+<pre><code class="language-math">y = 15 × 115 ÷ 9 ≒ 192
+</code></pre>
+<p>ということで約192光年です。</p>
+<h5>電動キックボード</h5>
+<p>今流行り(結構前の話)の電動キックボード。その時速は車道で時速20kmだそうです。(歩道だと時速6km)</p>
+<pre><code class="language-math">y = 20 × 115 ÷ 9 ≒ 256
+</code></pre>
+<p>なんかたまたま16の2乗ぐらいになりました。</p>
+<h5>在来線</h5>
+<p>在来線はE233系で時速120km出ます。</p>
+<pre><code class="language-math">y = 120 × 115 ÷ 9 ≒ 1533
+</code></pre>
+<p>1533光年いけるっぽいです。</p>
+<h5>自家用車(軽・普通)</h5>
+<p>軽は時速130km、普通車は時速180km出るようです。</p>
+<pre><code class="language-math">y = 130 × 115 ÷ 9 ≒ 1661
+y = 180 × 115 ÷ 9 = 2300
+</code></pre>
+<p>かなり行きましたね。軽でも1661光年のようです。普通車では2300光年…すごい。</p>
+<h5>新幹線(従来型・リニア)</h5>
+<p>従来型は時速320km、リニアは時速500kmです。</p>
+<pre><code class="language-math">y = 320 × 115 ÷ 9 ≒ 4089
+y = 500 × 115 ÷ 9 ≒ 6389
+</code></pre>
+<p>従来型(4089光年)でもすごいですが、リニア(6389光年)になるとさらにすごくなりますね…</p>
+<h5>スポーツカー(SSC トゥアタラ)</h5>
+<p>スポーツカーが早かった気がするので、そのランキングの1位に載ってたSSC トゥアタラで行きます。時速532kmらしいです。</p>
+<pre><code class="language-math">y = 532 × 115 ÷ 9 ≒ 6798
+</code></pre>
+<p>正直、リニアとそんなに印象変わりませんね。(それでも自転車2個分違う)</p>
+<h5>飛行機(ボーイング787)</h5>
+<p>時速918kmらしいです。久しぶりに9で割り切れます(そこじゃない)</p>
+<pre><code class="language-math">y = 918 × 115 ÷ 9 = 11730
+</code></pre>
+<p>1万光年の大台を超えました。</p>
+<h5>音</h5>
+<p>そういえば音がありませんね。気温15℃で音速は時速1224kmらしいです。</p>
+<pre><code class="language-math">y = 1224 × 115 ÷ 9 ≒ 15640
+</code></pre>
+<p>1万光年超えたと思ったら1.5万光年超えるの早すぎ…</p>
+<h5>コンコルド</h5>
+<p>コンコルドとは、超音速旅客機ですね。時速2200kmです。すごっ</p>
+<pre><code class="language-math">y = 2200 × 115 ÷ 9 ≒ 28111
+</code></pre>
+<p>3万光年近くなってきましたね。</p>
+<h5>戦闘機(Mig-25)</h5>
+<p>Mig-25は1970年就役らしいですが、いまだに活躍しているようです。その速度は時速3494kmだそうです。</p>
+<pre><code class="language-math">y = 3494 × 115 ÷ 9 ≒ 44646
+</code></pre>
+<p>4.5万光年ですね。</p>
+<h5>ロケット(人工衛星用)</h5>
+<p>時速28440km出すらしいです。</p>
+<pre><code class="language-math">y = 28440 × 115 ÷ 9 ≒ 363400
+</code></pre>
+<p>36万光年…すごい。</p>
+<h5>ボイジャー1号</h5>
+<p>時速60000km。想像つかん。</p>
+<pre><code class="language-math">y = 60000 × 115 ÷ 9 ≒ 766667
+</code></pre>
+<p>77万光年ですね。えぐい。</p>
+<h2>まとめ</h2>
+<p>徒歩・自転車らへん…遅いけどちりも積もれば山となる
+コンコルドらへん以降…やばい。(小並感)</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20250218);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

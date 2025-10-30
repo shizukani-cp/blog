@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="私が回りまわってvimにいった話です。">
+  <meta property="og:title" content="vimmerになった | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250331">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>vimmerになった | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>vimmerになった</h1>
+    <p>こんにちは。静カニです。約1週間ほど前、私はhelixからneovimに乗り換えて、vimmerになりました。今回は、この理由を書いていきます。</p>
+<p>あとなんとなく今入れてるプラグインも書いておきます。
+※この記事は、<a href="https://vim-jp.org/ekiden/">vim駅伝</a>の327本目の記事です。
+前回の記事は、<a href="https://github.com/yuys13/">yuys13さん</a>の
+<a href="https://zenn.dev/vim_jp/articles/nvim-test-with-neotest-plenary">Neovim luaのテストを書こう。neotestで高速に修正🔁テストのサイクルを回す</a>です。</p>
+<h2>helixから離れなかった理由</h2>
+<p>先に、そもそもなぜhelixから離れなかったのかを説明しておきます。</p>
+<p>その理由は、一つです。ですが、されどひとつ。そのひとつが、とても大きかったのです。</p>
+<p>…具体的には、Spaceモードの存在です。</p>
+<p>helixは、挿入モード、選択モード、ノーマルモードなどがある点でvimと似ているのですが、モード系の違いでこれはとても大きいのです。
+<img alt="helixのSpaceモードの画像" src="helix_space.png" />
+上の画像を見るとわかりますが、ファイル、バッファー、シンボルの各ピッカーがここからアクセスできるほか、
+クリップボード経由のコピー・ペーストもできるのです。</p>
+<h2>neovimに乗り換えた理由</h2>
+<p>続いて、本題のneovimに乗り換えた理由ですが、まぁ、皆さん予想通り(だと思われる)、自由度の高さです。
+(「vim-jpにいるんだったらvim使っといたほうが何かと有利かな」という謎な思考も相まった模様)</p>
+<p>ですが、この自由度の高さは前々から(helixにプラグインがないのも重なって)感じていました。ですから、何かしら最後の一押しになったものがあるはずです。
+それは…</p>
+<p><a href="https://minerva.mamansoft.net/📘Articles/📘CodeCompanionを使ってNeovimと一緒に楽しくAI Coding">前のvim駅伝の記事(📘CodeCompanionを使ってNeovimと一緒に楽しくAI Coding - Minerva)</a>のChatGPTの
+「まるで"刀"を研ぐかのように、自分の環境を作り上げてきたんじゃねぇのか…！？」という発言です!</p>
+<p>…なんでAIに心を動かされているんだろう…自分…</p>
+<p>ですが、これが私がhelixからneovimに移った理由です。ちなみにvimじゃなくてneovimにしたのは特に意味はありません。</p>
+<h2>今入れているプラグイン</h2>
+<p>話はちょっと逸れて、執筆時点(2025/03/26日現在)入れているプラグインを紹介します。ちなみに依存関係で入っているものは紹介してません。</p>
+<ul>
+<li>lazy.nvim…プラグイン管理</li>
+<li>folke/tokyonight.nvim…最近よく使っているtokyonightのテーマ</li>
+<li>nvim-neo-tree/neo-tree.nvim…ファイルツリー。nerdtreeじゃなくてこっちにした理由は覚えてない。helixのSpace+f相当</li>
+<li>j-morano/buffer_manager.nvim…その名の通りバッファーマネージャ。helixのSpace+b相当</li>
+<li>hrsh7th/nvim-cmp…LSP使用時の補完用。neovim/nvim-lspconfig・mason.nvimあたりも入ってますが省略。</li>
+<li>nvim-lualine/lualine.nvim…知ってる人も多い、下のステータスバーを改造できる。自分でもsectionいじった。</li>
+<li>norcalli/nvim-colorizer.nvim…CSSとかでカラーコードとかを入れると表示してくれる。まだ使ったことない。</li>
+<li>numToStr/Comment.nvim…コメントをしたり外したりしてくれる。画像に写ってないけどhelixのSpace+c相当。</li>
+<li>windwp/nvim-autopairs…括弧とかクオートとかを片方入力するともう片方も入力してくれる。inoremapとかよりも高性能。</li>
+<li>petertriho/nvim-scrollbar…右側にちっちゃいスクロールバーを追加してくれる。行数が多いファイルとかだと地味にありがたい。</li>
+<li>lewis6991/gitsigns.nvim…行ごとのgitのステータスを表示したりしてくれる。さっきのnvim-scrollbarと連携ができるから導入した。
+  このおかげで数日でairblade/vim-gitgutterがクビになった。</li>
+<li>j-hui/fidget.nvim…右下にLSPの起動状況とかを表示してくれる。地味にありがたい。</li>
+<li>stevearc/aerial.nvim…コード中のオブジェクトを表示してくれる。シンボルピッカーとは違うけど、helixのSpace+sとして使ってる。</li>
+<li>MeanderingProgrammer/render-markdown.nvim…markdownを開いているときにうまく装飾してくれる。挿入モードの時は働かないから書くときは邪魔にならない。
+  ちなみに書いている途中にカーソルを合わせてもそこの部分だけ働かなくなることに気づいた。</li>
+<li>jghauser/mkdir.nvim…存在しないディレクトリの中のファイルを開いたときに、自動的にディレクトリを保存してくれる。意外と使うシチュエーションが多い</li>
+</ul>
+<h2>最後に</h2>
+<p>そのうちdpp.vimとか導入したい!(難しすぎる)</p>
+<p>neovimの自由度が高すぎる!</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20250331);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

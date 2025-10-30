@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="開発環境に全然課金していない場合でも割とイケるよという話です。">
+  <meta property="og:title" content="無課金プログラマーの開発環境 | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250726">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>無課金プログラマーの開発環境 | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>無課金プログラマーの開発環境</h1>
+    <p>みなさんご存知、無課金おじさん。(知っていなくてもこの記事は全然読めます)元祖の無課金おじさん
+(ユスフ・ディケチ氏。パリ五輪で他の選手がガチガチ装備をしながら自分はラフな格好をして銀メダルを取ったすごい人。ネットミーム化されてる。)は
+射的の選手ですが、プログラミング界にも課金していないという人はいるはずです。
+そんな訳で元祖(?)の方がすごいのに対し何もやっていない自分ですが、環境に課金していないところだけは似ているので、そんな自分の開発環境を書いていきます。
+ちなみに私はGUI系はWindowsでやっていて、CLI系はWSLという使い分けをしています。</p>
+<p>ちなみにPC本体はそれなりの性能+Windows 11 Homeなので、そこだけ「課金」判定かもしれません。そこだけは許してください。</p>
+<h3>Windows側</h3>
+<p>まずは開発にはあまり関係ないですが、まずはGUIのWindowsからやっていきます。</p>
+<ul>
+<li>ブラウザ: Vivaldi。これに関しては無料のいいブラウザがたくさんあるけど、魔改造の魅力には抗えない。
+ちなみに私の観測圏内だとBraveを使っている人が多いです。</li>
+<li>AI(ブラウザで使う用): ChatGPT, Gemini(どちらも無料プラン)。こいつらは一応上位モデルをたくさん使っても下位モデルを使わせてくれるので、
+ありがたいです。ちなみにGeminiは会話の途中でモデルを変えられず、ChatGPTは上位モデルを使いきるまで下位モデルを使えないので、
+どっちもどっちだったりします。
+正直CLI系がメインなので、GUI系はこれぐらいです。ということでCLI側(WSL)行きます。</li>
+</ul>
+<h3>WSL側</h3>
+<ul>
+<li>LinuxのOS: Ubuntu。確か昔辛うじて知っていたLinuxのパッケージマネージャーがaptだったからだった気がする。
+DebianじゃなくてUbuntuにした理由はWSL使い始めた当時使っていたエディターのhelixが
+aptで入れられる(Debian対応とは言ってない)っていう感じだったからだと思う。</li>
+<li>エディタ: Neovim。魔改造には抗えない。helixの資産は活かせなかったけどneovimの改造は最高。」
+CLIのAI: Gemini-CLI。Googleアカウントに入れば無料で一応無限に使える。ただしProが終わった後次のプロンプトを投げると、
+ようやく制限に達したというメッセージが出て来て、もう一度同じプロンプトを投げないといけなくて地味に面倒。</li>
+</ul>
+<h2>最後に</h2>
+<p>私は学生で、プログラミングは趣味でやっているので課金していませんが、
+仕事でやっている方なんかは無課金にこだわりすぎて生産性が落ちないようにしてください。(誰に言ってるの?)
+まぁ、かと言って重課金勢になる新人も危ない気がしますが。
+とにかく、私は無課金でもいい感じに開発してるよという話でした。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20250726);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>
