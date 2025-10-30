@@ -2,6 +2,7 @@
 title: "Insertを抜けるキーマップの選択肢"
 description: "jj一強のInsert抜けキーマップの、その他の選択肢"
 date: 20251112
+use_prism: true
 ---
 みなさん、Insert抜けるのって、どうしてますか？大方は、`<Esc>`か`jj`の方が多いと思います。ですが、別に`jj`じゃなくてもいいはずです。
 ということで、最近の私のInsert抜けキーマップ事情です。
@@ -25,6 +26,17 @@ date: 20251112
 ただ、`fl`が`float`などで意外と使うのです。ということで、`fh`にマッピングし直しました。
 
 この状態で現在に至っています。
+
+一応コードも出しておきます。
+```lua
+vim.keymap.set('i', 'fj', '<Esc>', { noremap = true })
+vim.keymap.set('i', 'fk', '<Esc><Cmd>w<Cr>', { noremap = true })
+vim.keymap.set('i', 'fh', '<Esc><Cmd>wq<Cr>', { noremap = true })
+vim.keymap.set('i', '<Esc>', vim.schedule_wrap(function()
+    vim.notify("Escは無効にしておいたぞ。代わりに 'fj' を使っとけ(^^)", vim.log.levels.WARN)
+    return ""
+end), { noremap = true, expr = true })
+```
 ## 問題点
 一応、まだ問題点はあります。それが、skkeletonとの兼ね合いです。
 というのも、このプレフィックスは`f`な訳ですが、この`f`、skkeletonが吸ってしまうのです。
