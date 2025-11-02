@@ -61,3 +61,8 @@ pre, pre code {
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+main.article ul {
+    list-style: disc;
+    padding-left: 40px;
+}
