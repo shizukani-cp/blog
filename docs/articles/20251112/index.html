@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="jj一強のInsert抜けキーマップの、その他の選択肢">
+  <meta property="og:title" content="Insertを抜けるキーマップの選択肢 | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20251112">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>Insertを抜けるキーマップの選択肢 | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>Insertを抜けるキーマップの選択肢</h1>
+    <p>みなさん、Insert抜けるのって、どうしてますか？大方は、<code>&lt;Esc&gt;</code>か<code>jj</code>の方が多いと思います。ですが、別に<code>jj</code>じゃなくてもいいはずです。
+ということで、最近の私のInsert抜けキーマップ事情です。</p>
+<p>※この記事は、Vim駅伝の424本目の記事です。前回の記事は、
+<a href="https://github.com/thinca">@thinca</a>さんの、<a href="https://thinca.hatenablog.com/entry/2025/11/megurovim-32">Meguro.vim #32 を開催しました</a>です。</p>
+<h2>要件</h2>
+<p>とりあえず、私は<code>jj</code>にしようかと思ったのですが、<code>jj</code>以外のものでやってみたい、と思いました。
+ということで、とりあえずどのようなものがいいのか、を考えてみました。それが以下です。</p>
+<ul>
+<li><code>jj</code>以外</li>
+<li>英語の文章&amp;プログラミングで出てこない</li>
+<li>打ちやすい</li>
+</ul>
+<p>ということで、LLMに投げてみました、結果、<code>fj</code>が良いということになりました。
+で、矯正用に<code>&lt;Esc&gt;</code>をメッセージを表示する関数にマッピングして、やってみました。</p>
+<h2>改善フェーズ</h2>
+<p>実際にやってみたとこ、悪くなかったのはそうですが、この<code>fj</code>をしたあと、<code>:w</code>や<code>:wq</code>をする頻度が高いことに気付きました。
+ということで、マッピングしました。ホームポジションがいいので、それぞれ<code>fk</code>、<code>fl</code>にマッピングしました。
+ただ、<code>fl</code>が<code>float</code>などで意外と使うのです。ということで、<code>fh</code>にマッピングし直しました。</p>
+<p>この状態で現在に至っています。</p>
+<p>一応コードも出しておきます。</p>
+<pre><code class="language-lua">vim.keymap.set('i', 'fj', '&lt;Esc&gt;', { noremap = true })
+vim.keymap.set('i', 'fk', '&lt;Esc&gt;&lt;Cmd&gt;w&lt;Cr&gt;', { noremap = true })
+vim.keymap.set('i', 'fh', '&lt;Esc&gt;&lt;Cmd&gt;wq&lt;Cr&gt;', { noremap = true })
+vim.keymap.set('i', '&lt;Esc&gt;', vim.schedule_wrap(function()
+    vim.notify(&quot;Escは無効にしておいたぞ。代わりに 'fj' を使っとけ(^^)&quot;, vim.log.levels.WARN)
+    return &quot;&quot;
+end), { noremap = true, expr = true })
+</code></pre>
+<h2>問題点</h2>
+<p>一応、まだ問題点はあります。それが、skkeletonとの兼ね合いです。
+というのも、このプレフィックスは<code>f</code>な訳ですが、この<code>f</code>、skkeletonが吸ってしまうのです。
+なので、skkeleton有効化中に、<code>fk</code>と打つと、最初に<code>f</code>が出てきて、<code>k</code>を打つと<code>f</code>が消されて<code>k</code>が出てきて終了、となります。
+気合で<code>f</code>を潰すと、私は「ふ」を<code>fu</code>と打つ人間なので、「ふ」と打ったつもりが「う」にされる、というのは不快です。
+ということで、今度暇が出来たらdoc確認と分からなければソース探検隊をしてどうにかしたいと思います。</p>
+<h2>まとめ</h2>
+<p>他の人がみんな<code>jj</code>を使っているのを見て、逆張りで<code>f</code>をプレフィックスにしてみました。
+<code>f</code>自体は別として、<code>jk</code>で<code>&lt;Esc&gt;:w</code>相当のことが出来るようにする、としても面白いと思います。
+良かったら他の記事も見ていってください。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20251112);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

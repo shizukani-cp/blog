@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="自然言語処理に役立つため、テキストデータを集めたリポジトリを作ったので紹介します。">
+  <meta property="og:title" content="自然言語処理に役立ちたい | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20241113">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>自然言語処理に役立ちたい | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>自然言語処理に役立ちたい</h1>
+    <p>前回からかなり時間が空いてしまいました…。すみません…。(おい)</p>
+<h2>概要</h2>
+<p>自然言語処理用のデータをいっぱい集めたリポジトリがほしい！→自分で作ればええやん！</p>
+<h2>経緯</h2>
+<p>自分は、自然言語処理で自然言語をいじくりまわすために、結構苦労しました。例えば、</p>
+<ul>
+<li>Word2Vec→Wikipediaのアーカイブ→WikiExtractorがエラー吐く！</li>
+<li>マルコフ連鎖→青空文庫の「吾輩は猫である」→ルビが邪魔！
+といったところです。</li>
+</ul>
+<p>このようにみると、どちらもデータの準備段階でつっかかっていることがわかります。
+では、どうすればいいのでしょう。簡単です！そのまま使えるデータを最初から用意できればいいのです！</p>
+<p>…とは言っても、都合よくそんなデータはそんなにありません。であれば作っちまえ！というのが今回です。</p>
+<h2>現時点のリポジトリ</h2>
+<p>何と！初データ(余計なものを取り除いた「吾輩は猫である」)を今朝アップロードしたばかりです！つまり！出来立てほやほや！</p>
+<p>…勢いで書きましたが、データが全然ありません。そこで、このブログを見ている皆さん(一桁いるかどうか？)！データを増やすのに協力してほしいです！</p>
+<p>条件は<a href="https://github.com/shizukani-cp/textdatas">リポジトリ</a>のREADMEに書いておいたので、適宜参照してください。</p>
+<h2>最後に</h2>
+<p>久しぶり(1カ月以上！)に書いたせいか、調子が狂っているかもしれませんが、とりあえず今回のリポジトリに協力していただけると幸いです。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20241113);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

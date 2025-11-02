@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="Word2vecのモデルをgithubにプッシュしようとしてできなかった時の解決法">
+  <meta property="og:title" content="githubにpushしようとしたらできなかった話 | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20240807">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>githubにpushしようとしたらできなかった話 | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>githubにpushしようとしたらできなかった話</h1>
+    <h2>まえがき・経緯</h2>
+<p>こんにちは、静カニです。</p>
+<p>この間、gensimのWord2Vecを使ってプログラムを作っていた時に、モデルも追跡対象に入れていました。</p>
+<p>それを、Githubにプッシュしようとしたところ、VS Codeでは、
+「プッシュできませんでした。git pullで仕様を統合してからプッシュしてください。」的なメッセージが出てきました。</p>
+<h2>試したこと</h2>
+<p>単純にプッシュができなかっただけだと思い込んでいたので、調べたときに、git reset --hard origin/masterが出てきました。
+ですが、これではせっかくの変更がおじゃんになります。皆さんは注意しましょう。</p>
+<p>そこで、git push -fと直接コマンドを実行したエラーメッセージを翻訳したところ、「ファイルがでかすぎる」と言っていたことが分かりました。</p>
+<h2>解決方法</h2>
+<p>エラーメッセージにはgit-lfsというもののURLがあったため、使ってみると、モデルのサイズが小さくなったため、それでプッシュできる…かと思いました。</p>
+<p>ですが、一度コミットしたあと、小さくしてものをコミットしたため、前のコミットをプッシュしようとして、失敗してしまいます。</p>
+<p>それでは、どうすればよいかというと、先のgit reset ~ のうち、--hardオプションを--softオプションに変えてからコミットしなおすことです。</p>
+<p>--softオプションは現在のカレントディレクトリの状態は変えないので、そのままコミットすればよいということです。</p>
+<h2>結局必要なコマンド</h2>
+<pre><code class="language-shell">git reset --soft origin/[ブランチ]
+git lfs track &quot;[モデルのファイル名]&quot;
+git add .
+git commit -m &quot;メッセージ&quot;
+</code></pre>
+<h2>あとがき</h2>
+<p>そもそもgithubにバイナリのファイルはアップロードするべきではないという考え方の方もいると思いますので、
+これはごく限られた人にしか役に立たないかもしれませんが、自分の備忘録的にこの記事を書きました。</p>
+<h2>2024/08/08追記</h2>
+<p>git-lfsのインストール方法(自分が使っているWindows向けなので他のOSの場合は自分で調べてください)</p>
+<ol>
+<li><a href="https://git-lfs.com/">git-lfsのホームページ</a>を開く</li>
+<li>画面にあるインストーラをダウンロード・実行する</li>
+<li>ターミナルでgit lfs installを実行する</li>
+</ol>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20240807);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

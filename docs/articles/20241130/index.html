@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="ノートパソコンですごいLLMを作ろうとしている記事です。">
+  <meta property="og:title" content="ノーパソでつよつよLLM計画! | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20241130">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>ノーパソでつよつよLLM計画! | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>ノーパソでつよつよLLM計画!</h1>
+    <h2>概要</h2>
+<p>みなさん、Llamaが貧弱だと感じたことはありますか？ありますよね？(圧)</p>
+<p>だったら、自分で強くすればよいのです!以上!</p>
+<h2>方法</h2>
+<p>…これで終わるわけにも行かないので、方法を書き散らしておきます。</p>
+<p>まずは、Llamaを教師モデルとして自分のモデルを訓練するために、そのプログラムをPerplexityに書いてもらいます。
+そのプログラムがこちらです。(動作確認していないので、ご注意)</p>
+<pre><code class="language-python"># 初回用
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+from transformers import MllamaForConditionalGeneration, AutoProcessor
+from logging import getLogger, Formatter, StreamHandler, DEBUG
+
+# ロガーの設定
+logger = getLogger(__name__)
+logger.setLevel(DEBUG)
+handler = StreamHandler()
+handler.setLevel(DEBUG)
+formatter = Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+# WikipediaDatasetの定義
+class WikipediaDataset(Dataset):
+    def __init__(self, file_path, max_length=512):
+        self.file_path = file_path
+        self.max_length = max_length
+        self.data = self.load_annotations()
+
+    def load_annotations(self):
+        with open(self.file_path, 'r', encoding='utf-8') as f:
+            return [line.strip() for line in f if line.strip()]
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx][:self.max_length]
+
+# SmallModelの定義
+class SmallModel(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+        super(SmallModel, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, output_size)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# ローカルのLlama 3.2モデルのロード
+model_path = &quot;path/to/your/local/llama3.2/model&quot;
+teacher_model = MllamaForConditionalGeneration.from_pretrained(
+    model_path,
+    torch_dtype=torch.bfloat16,
+    device_map=&quot;auto&quot;
+)
+processor = AutoProcessor.from_pretrained(model_path)
+
+# SmallModelの初期化
+input_size = 768  # 入力サイズ（実際のタスクに合わせて調整）
+hidden_size = 256
+output_size = teacher_model.config.vocab_size
+student_model = SmallModel(input_size, hidden_size, output_size).to(&quot;cuda&quot;)
+
+# データセットとDataLoaderの準備
+dataset = WikipediaDataset(&quot;path/to/wiki.txt&quot;)
+dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
+
+# 損失関数とオプティマイザの設定
+criterion = nn.KLDivLoss(reduction='batchmean')
+optimizer = optim.Adam(student_model.parameters())
+
+# 学習ループ
+num_epochs = 10
+temperature = 2.0
+
+for epoch in range(num_epochs):
+    for batch in dataloader:
+        # 入力の処理
+        inputs = processor(batch, return_tensors=&quot;pt&quot;, padding=True, truncation=True).to(&quot;cuda&quot;)
+
+        # 教師モデルの出力を取得
+        with torch.no_grad():
+            teacher_outputs = teacher_model(**inputs).logits
+
+        # 生徒モデルの出力を取得
+        student_outputs = student_model(inputs.input_ids)
+
+        # 知識蒸留損失の計算
+        loss = criterion(
+            nn.functional.log_softmax(student_outputs / temperature, dim=-1),
+            nn.functional.softmax(teacher_outputs / temperature, dim=-1)
+        )
+
+        # 逆伝播と最適化
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    logger.debug(f&quot;Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}&quot;)
+
+# モデルの保存
+torch.save(student_model.state_dict(), &quot;small_model.pth&quot;)
+
+logger.debug(&quot;モデルが保存されました。&quot;)                                                                                                                                           )
+</code></pre>
+<pre><code class="language-python"># 2回目以降用
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+from transformers import MllamaForConditionalGeneration, AutoProcessor
+from logging import getLogger, Formatter, StreamHandler, DEBUG
+
+# ロガーの設定
+logger = getLogger(__name__)
+logger.setLevel(DEBUG)
+handler = StreamHandler()
+handler.setLevel(DEBUG)
+formatter = Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+# WikipediaDatasetの定義
+class WikipediaDataset(Dataset):
+    def __init__(self, file_path, max_length=512):
+        self.file_path = file_path
+        self.max_length = max_length
+        self.data = self.load_annotations()
+
+    def load_annotations(self):
+        with open(self.file_path, 'r', encoding='utf-8') as f:
+            return [line.strip() for line in f if line.strip()]
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        return self.data[idx][:self.max_length]
+
+# SmallModelの定義
+class SmallModel(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+        super(SmallModel, self).__init__()
+        self.fc1 = nn.Linear(input_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, output_size)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# ローカルのLlama 3.2モデルのロード（教師モデル）
+model_path = &quot;path/to/your/local/llama3.2/model&quot;
+teacher_model = MllamaForConditionalGeneration.from_pretrained(
+    model_path,
+    torch_dtype=torch.bfloat16,
+    device_map=&quot;auto&quot;
+)
+processor = AutoProcessor.from_pretrained(model_path)
+
+# 既存の生徒モデルの読み込み
+student_model = SmallModel(input_size=768, hidden_size=256, output_size=teacher_model.config.vocab_size)
+student_model.load_state_dict(torch.load(&quot;small_model.pth&quot;))
+student_model.eval()  # 教師モデルとして評価モードに設定
+
+# 新しい生徒モデルの初期化
+new_student_model = SmallModel(input_size=768, hidden_size=256, output_size=teacher_model.config.vocab_size).to(&quot;cuda&quot;)
+
+# データセットとDataLoaderの準備
+dataset = WikipediaDataset(&quot;path/to/wiki.txt&quot;)
+dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
+
+# 損失関数とオプティマイザの設定
+criterion_soft = nn.KLDivLoss(reduction='batchmean')
+criterion_hard = nn.CrossEntropyLoss()
+optimizer = optim.Adam(new_student_model.parameters())
+
+# 学習ループ
+num_epochs = 10
+temperature = 2.0
+alpha = 0.5  # ソフトターゲットとハードターゲットのバランス
+
+for epoch in range(num_epochs):
+    for batch in dataloader:
+        # 入力の処理
+        inputs = processor(batch, return_tensors=&quot;pt&quot;, padding=True, truncation=True).to(&quot;cuda&quot;)
+
+        # 教師モデル（元の生徒モデル）の出力を取得
+        with torch.no_grad():
+            teacher_outputs = student_model(inputs.input_ids)
+
+        # 新しい生徒モデルの出力を取得
+        new_student_outputs = new_student_model(inputs.input_ids)
+
+        # 知識蒸留損失の計算
+        loss_soft = criterion_soft(
+            nn.functional.log_softmax(new_student_outputs / temperature, dim=-1),
+            nn.functional.softmax(teacher_outputs / temperature, dim=-1)
+        )
+
+        loss_hard = criterion_hard(new_student_outputs.view(-1, teacher_model.config.vocab_size), inputs.input_ids.view(-1))
+
+        # 総合損失の計算
+        loss = alpha * loss_soft + (1 - alpha) * loss_hard
+
+        # 逆伝播と最適化
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+    logger.debug(f&quot;Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}&quot;)
+
+# 新しい生徒モデルの保存
+torch.save(new_student_model.state_dict(), &quot;new_small_model.pth&quot;)
+
+logger.debug(&quot;新しい生徒モデルが保存されました。&quot;)
+</code></pre>
+<p>(これを作らせた会話は<a href="https://www.perplexity.ai/search/llama3-2no-zhi-shi-nozheng-liu-tP2OqPtGSTSad4lSwDhZsQ">こちら</a>)
+余談ですが、Perplexityに書いてもらった理由は、ChatGPTだと教師モデル云々かんぬんがどれだけ知っているかわからなかったためです。</p>
+<p>ちなみに自分は、AIをこんな感じで使い分けています。</p>
+<ul>
+<li>とりあえずブレインストーミング系とかアイデア出しをしたいとき → Gemini</li>
+<li>ファクトチェックができたらいいとき → Genspark</li>
+<li>最新技術を使ったコードがほしいとき → Perplexity</li>
+</ul>
+<p>Geminiを使っている理由としては、個人情報をGoogleだけにしまっておきたいからです。(ChatGPTはGoogleアカウントだけだと登録できない)</p>
+<p>話が脱線しましたが、生成してもらったコードを見た感じだと、</p>
+<ol>
+<li>文か何かを教師モデルに見せる</li>
+<li>教師モデルが回答</li>
+<li>生徒モデルも同じような回答になるようにパラメータを調整
+という感じでやっているようです。</li>
+</ol>
+<p>ですが、手元には文か何かにあたるものがありません。</p>
+<p>というわけで、何を用意するかというと、Wikipediaのダンプです。</p>
+<h2>憎きWikiextractor</h2>
+<p>Wikipediaのダンプを用意するとなったら、ダウンロード！</p>
+<p>ですが、データはXMLになっていて、なおかつそもそも圧縮されています。
+これをやってくれるのがWikiextractor君なのですが、すでに2回悩まされています。</p>
+<p>じゃあ成功した時のデータをとっておけという声が聞こえてきますが、なんか見つからなかったので仕方がありません。</p>
+<p>で、3回目の今回も悩まされているのですが、永遠にできなくて、やる気をなくして現実逃避でこの記事を書いていたりします。</p>
+<p>とりあえず、解決できたら色々追記すると思うので、待っていてください。</p>
+<h3>2025/01/09追記</h3>
+<p>ファイル整理してたら2回目に成功したときのデータが出てきました。やったね！</p>
+<h2>Wikipediaだけじゃ…</h2>
+<p>Wikipediaでは、とりあえず基本的な常識とかは身に付きますが、Markdownという結構重要なことが身に付きません。</p>
+<p>では、どうすればいいのでしょうか。StackOverFlowのダンプです！</p>
+<p>StackOverFlowは皆さんご存じのプログラミングの質問投稿サイトですが、Markdownを使用していたり、コードがあったりと、結構役に立ちます。</p>
+<p>StackOverFlowのダンプは、archive.orgの中で7z形式で圧縮されたうえで公開されています。</p>
+<p>ちなみに、ライセンスはどうかなと見たところ、WikipediaもStackOverFlowも<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja">CC BY-SA 4.0</a>で
+公開されていたので、大丈夫でした。</p>
+<p>これで、CC BY-SAとCC BY-NC-SAの組み合わせだったら、死んでいたところでした。</p>
+<h2>今後</h2>
+<p>とりあえず開発途中に書いた記事なので、今後もどんどん更新を入れていきます。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20241130);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

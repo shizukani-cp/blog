@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="読ませる気がなさすぎるプログラミング言語を作った記事です。">
+  <meta property="og:title" content="読ませる気のなさすぎるプログラミング言語 | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250920">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>読ませる気のなさすぎるプログラミング言語 | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>読ませる気のなさすぎるプログラミング言語</h1>
+    <p>さて、みなさん、似ている文字って何と何ですか？そう、ひらがなのへとカタカナのヘですよね(圧)。そして、みなさんご存知BrainF**k。
+この言語には、命令が8種類あります。そして、8といったら2の3乗。へとヘを3つ組み合わせたらBrainF**kの命令一つに対応させることができます。
+ここまで行けば分かるでしょう。へとヘで書く、読ませる気のなさすぎるプログラミング言語を作ってきました。
+<a href="https://github.com/shizukani-cp/hehehe">こちら</a>です。ということで見ていきましょう。</p>
+<h2>詳細</h2>
+<h3>実装</h3>
+<p>まずは、実装でしょうか。まず、ベースとして、とりあえず自作のBrainF**kインタプリタがあります。そして、これを変換表を対応させて実行させています。
+ちなみに、変換表はこんな感じです。</p>
+<pre><code class="language-json">{
+  &quot;&gt;&quot;: &quot;へへへ&quot;,
+  &quot;&lt;&quot;: &quot;へへヘ&quot;,
+  &quot;+&quot;: &quot;へヘへ&quot;,
+  &quot;-&quot;: &quot;へヘヘ&quot;,
+  &quot;.&quot;: &quot;ヘへへ&quot;,
+  &quot;,&quot;: &quot;ヘへヘ&quot;,
+  &quot;[&quot;: &quot;ヘヘへ&quot;,
+  &quot;]&quot;: &quot;ヘヘヘ&quot;
+}
+</code></pre>
+<p>へ(ひらがな)とヘ(カタカナ)を0と1にするとこんな感じです。</p>
+<pre><code class="language-json">{
+  &quot;&gt;&quot;: &quot;000&quot;,
+  &quot;&lt;&quot;: &quot;001&quot;,
+  &quot;+&quot;: &quot;010&quot;,
+  &quot;-&quot;: &quot;011&quot;,
+  &quot;.&quot;: &quot;100&quot;,
+  &quot;,&quot;: &quot;101&quot;,
+  &quot;[&quot;: &quot;110&quot;,
+  &quot;]&quot;: &quot;111&quot;
+}
+</code></pre>
+<h3>コード</h3>
+<p>実際のコードを見ていきましょう。Hello Worldと出力します。</p>
+<pre><code>へヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへへヘへへヘへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘへへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへヘヘへへへへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへヘへへへヘへヘヘヘヘヘへへへヘへへへへへ
+</code></pre>
+<p>元のBrainF**kはこんな感じです</p>
+<pre><code class="language-bf">+++++++[&gt;++++++++++&lt;-]&gt;++.&gt;++++++++++[&gt;++++++++++&lt;-]&gt;+.&gt;++++++++++[&gt;++++++++++&lt;-]&gt;++++++++.&gt;++++++++++[&gt;++++++++++&lt;-]&gt;++++++++.&gt;+++++++++++[&gt;++++++++++&lt;-]&gt;+.&gt;++++++++[&gt;++++&lt;-]&gt;.&gt;++++++++[&gt;++++++++++&lt;-]&gt;+++++++.&gt;+++++++++++[&gt;++++++++++&lt;-]&gt;+.&gt;+++++++++++[&gt;++++++++++&lt;-]&gt;++++.&gt;++++++++++[&gt;++++++++++&lt;-]&gt;++++++++.&gt;++++++++++[&gt;++++++++++&lt;-]&gt;.&gt;
+</code></pre>
+<p>さっさと公開したいので以上です。</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20250920);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

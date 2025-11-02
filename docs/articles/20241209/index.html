@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="日本人の平均の身長・体重から考えて、自分の身長・体重の比率があっているのか計算してみた記事です。">
+  <meta property="og:title" content="プロフィールは本当？ | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20241209">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>プロフィールは本当？ | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>プロフィールは本当？</h1>
+    <h2>概要</h2>
+<p>皆さん、私のプロフィールに以下のような一節があるのがわかりますか？</p>
+<blockquote>
+<p>ちなみに身長は3mm、体重は3mg、年齢は138億歳です。
+この身長と体重の <strong>比率</strong> 、あっているのでしょうか。※年齢の話はおいておきます。</p>
+</blockquote>
+<h2>通常はどうなの？</h2>
+<p>こういう時は、通常がないと困るので、まずはそこから行きましょう。ここでは、日本人成人男性を通常とします。
+<a href="https://www.e-stat.go.jp/dbview?sid=0003224177">e-stat</a>には、身長が163.1cm、体重62.7kgとあります。
+これを通常として計算します。</p>
+<h2>計算だ！</h2>
+<p>まず、立方体の各辺を1/2にすると、体積は1/8になるということはお分かりかと思います。つまり、各辺の3乗が体積になります。
+体重が体積に比例すると考えると、身長を1/2にしたとき、体重は1/8になるということです。これを利用して考えていきます。</p>
+<h3>身長基準</h3>
+<p>まず、身長が通常の何分の一かを出します。</p>
+<pre><code class="language-math">163.1cm ÷ 3mm = 1631mm ÷ 3mm ≒ 544
+</code></pre>
+<p>より、私の身長は、通常の約1/544のようです。これを3乗すると、体重が何分の一になるかがわかります。</p>
+<pre><code class="language-math">(544/1) ** 3 = 160989184/1
+</code></pre>
+<p>より、160989184で割ればいいようです。</p>
+<pre><code class="language-math">62.7kg ÷ 160989184 = 62700000mg ÷ 160989184 = 0.389467158241(mg)
+</code></pre>
+<p>より、身長から出される適正な体重は、約0.4mgなようです。実際の体重は3mgですから、約7.5倍です。</p>
+<h3>体重基準</h3>
+<p>立方体の各辺を1/2にすると、体積は1/8になるわけですから、体積を1/8にすると、各辺は3乗根の1/2になります。
+ですから、さっきの仮定で行くと、体重を1/8にすると、身長は1/2になるはずです。</p>
+<p>とりあえず、体重が通常の何分の一かを出しましょう。</p>
+<pre><code class="language-math">62.7kg ÷ 3mg = 62700000mg ÷ 3mg = 20900000
+</code></pre>
+<p>ですから、体重は通常の1/20900000だそうです。
+このとき、身長は、通常の何分の一になるかというと、20900000の3乗根は276くらいなので、約276分の一になります。</p>
+<pre><code class="language-math">163.1cm ÷ 276 = 1631mm ÷ 276 ≒ 5.9
+</code></pre>
+<p>より、体重から考える適正身長は、約5.9mmのようです。3mmの2倍弱です。</p>
+<p>ちなみに、この2倍弱を3乗すると、さっきの7.5倍が得られるので、たぶんどっちもあっているといった感じになります。</p>
+<h2>結論！</h2>
+<p>自分は、通常の約7.5倍デブor通常の約2倍チビ!</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20241209);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>

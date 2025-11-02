@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  
+  <link rel="stylesheet" href="../../styles/prism.css">
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="/blog/rss.xml">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="vim licenseがどんなライセンスか気になったので、調べます。">
+  <meta property="og:title" content="vim licenseについて調べる | 静カニのブログ">
+  <meta property="og:site_name" content="静カニのブログ">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://shizukani-cp.github.io/blog/articles/20250124">
+  <meta property="og:image" content="https://shizukani-cp.github.io/blog/shizukani_title.png">
+  <title>vim licenseについて調べる | 静カニのブログ</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RHCWBF26WV');
+  </script>
+</head>
+
+<body>
+  
+  <script src="../../scripts/prism.js"></script>
+  
+  <header>
+    <a href="../../">
+      <img src="../../shizukani_title.png" alt="タイトル画像" class="title-image">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="../../">ホーム</a></li>
+        <li><a href="../20240803/">自己紹介</a></li>
+        <li><a href="https://shizukani-cp.github.io/basestyle.css/">basestyle.css</a></li>
+        <li><a href="https://shizukani-cp.github.io/htmlapps/">色々ボックス</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="article">
+    <h1>vim licenseについて調べる</h1>
+    <p>※この記事は<a href="https://vim-jp.org/ekiden/">vim駅伝</a>の299本目の記事です。
+前回の記事は<a href="https://github.com/thinca">@thinca</a>さんの<a href="https://thinca.hatenablog.com/entry/2025/01/megurovim-27">Meguro.vim #27 を開催しました</a>です。
+次回で300本!</p>
+<p>この間なんとなく<a href="https://github.com/vim/vim">vimのリポジトリ</a>を見ていてふとライセンスを見たら、「Vim License」と書いてありました。
+そんなライセンスを知らなかったので、いろいろ見つつ解説していきます。</p>
+<p>ちなみに、自分は大体のリポジトリはMITライセンスで公開しているのでそれと比較しながら解説しようと思います。</p>
+<h2>MITライセンス</h2>
+<p>まずは、安心のMITライセンスです。原文は<a href="https://opensource.org/license/MIT">こちら</a>、日本語訳は<a href="https://licenses.opensource.jp/MIT/MIT.html">こっち</a>ですね。</p>
+<p>MITライセンスは、何といってもその自由度が特徴です!</p>
+<p>条文だけでも、ソフトウェアの複製を使用、複製、改変、結合、公開、頒布、再許諾、販売する権利、
+ソフトウェアを提供する人物に同様の行為をする権利が書いてあり、「これらに限られません」とまで書いてあります。</p>
+<p>ただ、ソフトウェアを複製する場合は、著作権表示とかをしなきゃいけないようです。
+ちなみに、作者は全く責任を負わないようです。私のようなMr.無責任にピッタリですね!(おい)</p>
+<h2>vim license</h2>
+<p>次に、本題のvim licenseです。<a href="https://vim-jp.org/vimdoc-ja/uganda.html">ここ</a>をスクロールすると、
+原文・日本語訳ともに見られるので、参考にしてください。というか、この記事では、この日本語版を読んで書いていたります。</p>
+<p>これは、変更した場合と、変更していない場合とでちょっと義務が変わってくるので見ていきましょう。</p>
+<h3>変更した場合</h3>
+<p>まずは、ライセンス文を維持しなければいけないようです。…と思ったら「変更に GNU General Public License (GPL) が適用されている場合、
+GNU GPL バージョン 2、またはそれより新しいバージョンに基づいて、その変更された Vim を配布することができます。」って書いてある…</p>
+<pre><code>II) 以下の 4 つの条件を満たす場合に限り、Vim に変更 (または拡張) を加えた物を、実行可能ファイルやソースコードも含めて配布することが認められています:  
+        1) このライセンス文を変更せずに配布物に含めること。
+              ︙
+        2) 変更された Vim は以下の 5 つの方法のどれかで配布しなければならない。
+              ︙
+          その変更に GNU General Public License (GPL) が適用されている場合、GNU GPL バージョン 2、またはそれより新しいバージョンに基づいて、その変更された Vim を配布することができます。」
+</code></pre>
+<p>…矛盾しないの？
+というわけでvim-jpのslack(#tech-license)で聞いてみました。
+<img alt="slackでの会話" src="slack_screen.png" />
+で、次やらなきゃいけないのは、連絡先を明示することらしいです。たぶんGmailとかでもいいと思います。ここに電話番号とか書く人いなそうだし…。
+これには少なくとも3年、できる限り長く連絡がつくようにしないといけないようです。
+その次!何やら元との差分を表示しなきゃ行けないようです。そして、その変更点を少なくとも3年間は保持しないといけないようです。
+その3年間の間は、メンテナーなりいろんな人が変更点を利用できるようにしないといけないようです。</p>
+<p>さらに、「これ変更した後のやつだから」的なのが分かるように<code>:version</code>コマンドとか起動時のメッセージとかでわかるようにしなきゃ行けないらしいです。</p>
+<p>あと、結構重要かもしれないのですが、本人が訂正しない限り連絡先は変更・削除できないっぽいです。まぁ、勝手に人の連絡先を変えるのは…ね。</p>
+<h3>変更しなかった場合</h3>
+<p>まず、「Vim のコピーを変更せずに配布することは、このライセンス文を含めなければならないこと以外に制限されません。」と
+条文にしっかり書いてあるので、結構自由ですね。
+あと、一部分だけとか、自分が作ったものも同梱とかも、OKらしいです。
+というか、変える・変えないどっちの場合にしてももライセンス変えるなってところでは
+<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja">CC BY-SA</a>とちょっと似てますね。</p>
+<h2>まとめ</h2>
+<p>MITライセンス…とにかく自由!自由主義!(…なのか？自分はそういう認識)</p>
+<p>vim license…変更しない限りはMITライセンスといい勝負。変更したらちょっと縛り。</p>
+<h2>おまけ</h2>
+<p>MITライセンスをリポジトリに突っ込んでくれるPowerShell関数。profile.ps1に突っ込んどくと役に立つ。飽き性でリポジトリめっちゃ作る人限定だけど。</p>
+<pre><code class="language-profile.ps1">function Add-License {
+  param (
+    [string]$msg = &quot;ライセンスを追加&quot;
+  )
+  Write-Output(@&quot;
+MIT License
+
+Copyright (c) {0} yourname
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+&quot;@ -f (Get-Date).Year ) &gt; LICENSE.txt
+  git add LICENSE.txt
+  git commit -m &quot;${msg}&quot;
+}
+</code></pre>
+<p>※yournameはあなたのgithubのユーザー名とかをぶち込むところです。ちゃんと適宜調整してください。</p>
+<p>次回はvim駅伝300本目!</p>
+  </main>
+  <aside id="sidebar">
+    <div id="index"></div>
+    <script src="https://utteranc.es/client.js" repo="shizukani-cp/blog" issue-term="title" theme="github-dark"
+      crossorigin="anonymous" async>
+      </script>
+  </aside>
+  <footer>
+    <p>&copy; 2024 shizukani-cp</p>
+  </footer>
+  <script src="../../scripts/create_index.js"></script>
+  <script src="../../scripts/set_main_padding_bottom.js"></script>
+  <script src="../../scripts/show_date_function.js"></script>
+  <script>
+    show_date(20250124);
+  </script>
+  <script src="../../scripts/articles.json.js"></script>
+  <script src="../../scripts/back_next_button.js"></script>
+</body>
+
+</html>
