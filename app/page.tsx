@@ -78,4 +78,3 @@ export const metadata: Metadata = {
   title: "静カニのブログのホーム | 静カニのブログ",
   description: "静カニのブログのホーム",
 };
-

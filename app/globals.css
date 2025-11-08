@@ -53,6 +53,25 @@ a.card {
   transition: background 0.2s;
 }
 
+a.card:hover {
+  background: #2a2a2a
+}
+
+a.card h3 {
+  font-size: 1.8rem;
+  margin: 0 0 8px 0;
+}
+
+a.card p {
+  color: #c0c0c0;
+  font-size: 1rem;
+  margin: 0 0 12px 0;
+}
+
+a.card small {
+  color: #a0a0a0;
+}
+
 a.index {
   color: #ffffff;
   text-decoration: none;
