@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +12,67 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://shizukani-cp.github.io/basestyle.css/basestyle-dark.css"
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS2.0"
+          href="/blog/rss.xml"
+        />
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta
+          property="og:image"
+          content="https://shizukani-cp.github.io/blog/shizukani_title.png"
+        />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"
+        >
+        </script>
+      </head>
+
+      <body>
+        <header>
+          <a href="../../">
+            <img
+              src="../../shizukani_title.png"
+              alt="タイトル画像"
+              className="title-image"
+            />
+          </a>
+          <nav>
+            <ul>
+              <li>
+                <a href=".">ホーム</a>
+              </li>
+              <li>
+                <a href="articles//20240803/">自己紹介</a>
+              </li>
+              <li>
+                <a href="https://shizukani-cp.github.io/basestyle.css/">
+                  basestyle.css
+                </a>
+              </li>
+              <li>
+                <a href="https://shizukani-cp.github.io/htmlapps/">
+                  色々ボックス
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          {children}
+        </main>
+        <footer>
+          <p>&copy; 2024 shizukani-cp</p>
+        </footer>
       </body>
     </html>
   );
