@@ -14,8 +14,8 @@ function formatDate(date: number) {
   const month = parseInt(date_s.substring(4, 6), 10);
   const day = parseInt(date_s.substring(6, 8), 10);
   return `${year}年${month.toString().padStart(2, "0")}月${day
-    .toString()
-    .padStart(2, "0")
+      .toString()
+      .padStart(2, "0")
     }日`;
 }
 
@@ -37,6 +37,18 @@ type Heading = {
   text: string;
   level: number;
 };
+
+export async function generateStaticParams() {
+  const articlesDir = path.join(process.cwd(), "articles");
+  const fileNames = fs.readdirSync(articlesDir).filter((name) =>
+    name.endsWith(".md")
+  );
+
+  return fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.md$/, "");
+    return { slug };
+  });
+}
 
 function extractHeadings(markdown: string): Heading[] {
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
@@ -109,4 +121,3 @@ export default async function ArticlePage({ params }: Props) {
     </>
   );
 }
-
