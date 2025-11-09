@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import type { Metadata } from "next";
 
 interface Article {
   title: string;
@@ -72,3 +73,9 @@ export default async function Home() {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "静カニのブログのホーム | 静カニのブログ",
+  description: "静カニのブログのホーム",
+};
+
