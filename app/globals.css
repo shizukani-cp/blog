@@ -41,6 +41,7 @@ img {
 img.title-image {
   width: 200px;
   height: auto;
+  margin: auto;
 }
 
 main.article {
