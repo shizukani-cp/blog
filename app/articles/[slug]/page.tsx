@@ -2,14 +2,9 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { notFound } from "next/navigation";
-
-interface ArticleData {
-  title: string;
-  description: string;
-  date: number;
-  use_prism: boolean;
-  content: string;
-}
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 function formatDate(date: number) {
   const date_s = date.toString();
@@ -30,22 +25,23 @@ export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
   const fullPath = path.join(process.cwd(), "articles", `${slug}.md`);
 
-  // Markdownファイル存在チェック
   if (!fs.existsSync(fullPath)) {
-    notFound(); // 404ページ表示
+    notFound();
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
-  // 必要に応じてMarkdownをHTMLやReact要素に変換する処理を追加してな
-
   return (
     <main className="article">
       <h1>{data.title}</h1>
-      <p>{data.description}</p>
       <time>{formatDate(parseInt(data.date, 10))}</time>
-      <section>{content}</section>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeHighlight]}
+      >
+        {content}
+      </ReactMarkdown>
     </main>
   );
 }

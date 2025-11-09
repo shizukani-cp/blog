@@ -7,7 +7,6 @@ interface Article {
   title: string;
   description: string;
   date: number;
-  use_prism: boolean;
   slug: string;
 }
 
