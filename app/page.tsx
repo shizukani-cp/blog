@@ -21,7 +21,7 @@ function formatDate(date: number) {
 
 function Card({ article }: { article: Article }) {
   return (
-    <a className="card" href={`/articles/${article.slug}`}>
+    <a className="card" href={`/blog/articles/${article.slug}`}>
       <h3>{article.title}</h3>
       <p>{article.description}</p>
       <small>{formatDate(article.date)}</small>
