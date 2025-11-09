@@ -1,6 +1,10 @@
 @import url('https://shizukani-cp.github.io/basestyle.css/basestyle-dark.min.css');
 @import "tailwindcss";
 
+a {
+  color: #66b3ff;
+}
+
 ol {
   padding-left: 1%;
 }
