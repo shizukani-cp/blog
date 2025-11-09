@@ -35,9 +35,9 @@ export default function RootLayout({
     <html>
       <body>
         <header>
-          <a href="../../">
+          <a href="/blog/">
             <img
-              src="../../shizukani_title.png"
+              src="/blog/shizukani_title.png"
               alt="タイトル画像"
               className="title-image"
             />
@@ -45,10 +45,10 @@ export default function RootLayout({
           <nav>
             <ul>
               <li>
-                <a href=".">ホーム</a>
+                <a href="/blog/">ホーム</a>
               </li>
               <li>
-                <a href="articles//20240803/">自己紹介</a>
+                <a href="/blog/articles/20240803/">自己紹介</a>
               </li>
               <li>
                 <a href="https://shizukani-cp.github.io/basestyle.css/">
