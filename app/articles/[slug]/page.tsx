@@ -14,8 +14,8 @@ function formatDate(date: number) {
   const month = parseInt(date_s.substring(4, 6), 10);
   const day = parseInt(date_s.substring(6, 8), 10);
   return `${year}年${month.toString().padStart(2, "0")}月${day
-      .toString()
-      .padStart(2, "0")
+    .toString()
+    .padStart(2, "0")
     }日`;
 }
 
@@ -94,14 +94,6 @@ export default async function ArticlePage({ params }: Props) {
     <>
       <aside id="sidebar">
         <Index headings={headings} />
-        <Script
-          src="https://utteranc.es/client.js"
-          repo="shizukani-cp/blog"
-          issue-term="title"
-          theme="github-dark"
-          crossorigin="anonymous"
-          async
-        />
       </aside>
 
       <main className="article">
