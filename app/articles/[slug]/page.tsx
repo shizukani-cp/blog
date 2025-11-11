@@ -1,4 +1,3 @@
-import Script from "next/script";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -14,8 +13,8 @@ function formatDate(date: number) {
   const month = parseInt(date_s.substring(4, 6), 10);
   const day = parseInt(date_s.substring(6, 8), 10);
   return `${year}年${month.toString().padStart(2, "0")}月${day
-      .toString()
-      .padStart(2, "0")
+    .toString()
+    .padStart(2, "0")
     }日`;
 }
 
