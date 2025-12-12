@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <header>
+        <header className="flex w-full items-center justify-between px-4 py-3 border-b">
           <a href="/blog/">
             <img
               src="/blog/shizukani_title.png"
@@ -42,33 +42,33 @@ export default function RootLayout({
               className="title-image"
             />
           </a>
-          <nav>
-            <ul>
-              <li>
-                <a href="/blog/">ホーム</a>
-              </li>
-              <li>
-                <a href="/blog/articles/20240803">自己紹介</a>
-              </li>
-              <li>
-                <a href="https://shizukani-cp.github.io/basestyle.css/">
-                  basestyle.css
-                </a>
-              </li>
-              <li>
-                <a href="https://shizukani-cp.github.io/htmlapps/">
-                  色々ボックス
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <div className="flex items-center gap-6">
+            <nav>
+              <ul>
+                <li>
+                  <a href="/blog/">ホーム</a>
+                </li>
+                <li>
+                  <a href="/blog/articles/20240803">自己紹介</a>
+                </li>
+                <li>
+                  <a href="https://shizukani-cp.github.io/basestyle.css/">
+                    basestyle.css
+                  </a>
+                </li>
+                <li>
+                  <a href="https://shizukani-cp.github.io/htmlapps/">
+                    色々ボックス
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <span className="hidden text-xs text-gray-400 md:block">&copy; 2024 shizukani-cp</span>
+          </div>
         </header>
         <main>
           {children}
         </main>
-        <footer>
-          <p>&copy; 2024 shizukani-cp</p>
-        </footer>
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"
