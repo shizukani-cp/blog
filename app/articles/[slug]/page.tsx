@@ -8,6 +8,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import { Metadata } from "next";
 import { cache } from "react";
+import Link from "next/link";
 
 interface Props {
   params: { slug: string };
@@ -17,6 +18,12 @@ type Heading = {
   id: string;
   text: string;
   level: number;
+};
+
+type ArticleMeta = {
+  slug: string;
+  title: string;
+  date: number;
 };
 
 const LEVEL_AND_SIZE: Record<number, number> = {
@@ -62,42 +69,52 @@ const getArticle = cache(async (slug: string) => {
   return matter(fileContents);
 });
 
+const getAllArticles = cache(async (): Promise<ArticleMeta[]> => {
+  const articlesDir = path.join(process.cwd(), "articles");
+  const fileNames = fs.readdirSync(articlesDir).filter((name) =>
+    name.endsWith(".md")
+  );
+
+  const articles = fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.md$/, "");
+    const fullPath = path.join(articlesDir, fileName);
+    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const { data } = matter(fileContents);
+
+    return {
+      slug,
+      title: data.title,
+      date: parseInt(data.date, 10),
+    };
+  });
+
+  return articles.sort((a, b) => b.date - a.date);
+});
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticle(slug);
 
   if (!article) {
-    return {
-      title: "記事が見つかりません",
-    };
+    return { title: "記事が見つかりません" };
   }
 
   const { data } = article;
 
   return {
-    title: `${data.title} | 静カニのブログ`,
+    title: data.title,
     description: data.description || "記事の詳細です",
     openGraph: {
       title: data.title,
       description: data.description,
       type: "article",
     },
-    twitter: {
-      card: "summary_large_image",
-    },
   };
 }
 
 export async function generateStaticParams() {
-  const articlesDir = path.join(process.cwd(), "articles");
-  const fileNames = fs.readdirSync(articlesDir).filter((name) =>
-    name.endsWith(".md")
-  );
-
-  return fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "");
-    return { slug };
-  });
+  const articles = await getAllArticles();
+  return articles.map((article) => ({ slug: article.slug }));
 }
 
 function Index({ headings }: { headings: Heading[] }) {
@@ -119,7 +136,9 @@ function Index({ headings }: { headings: Heading[] }) {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
+
   const article = await getArticle(slug);
+  const allArticles = await getAllArticles();
 
   if (!article) {
     notFound();
@@ -127,6 +146,10 @@ export default async function ArticlePage({ params }: Props) {
 
   const { data, content } = article;
   const headings = extractHeadings(content);
+
+  const currentIndex = allArticles.findIndex((a) => a.slug === slug);
+  const newerArticle = allArticles[currentIndex - 1] || null;
+  const olderArticle = allArticles[currentIndex + 1] || null;
 
   const contentWithIds = content.replace(
     /^(#{1,6})\s+(.+)$/gm,
@@ -152,6 +175,40 @@ export default async function ArticlePage({ params }: Props) {
         >
           {contentWithIds}
         </ReactMarkdown>
+
+        <div className="mt-12 border-t border-gray-800 pt-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between">
+            {olderArticle ? (
+              <Link
+                href={`/articles/${olderArticle.slug}/`}
+                className="group flex w-full flex-col rounded-lg border border-gray-700 p-4 transition-all hover:border-blue-500 hover:bg-gray-800 sm:w-[48%]"
+              >
+                <span className="mb-2 text-xs font-bold text-gray-500 group-hover:text-blue-400">
+                  &laquo; 前の記事
+                </span>
+                <span className="line-clamp-2 text-sm font-bold text-gray-200 group-hover:text-blue-300">
+                  {olderArticle.title}
+                </span>
+              </Link>
+            ) : (
+              <div className="hidden sm:block sm:w-[48%]" />
+            )}
+
+            {newerArticle && (
+              <Link
+                href={`/articles/${newerArticle.slug}/`}
+                className="group flex w-full flex-col items-end rounded-lg border border-gray-700 p-4 text-right transition-all hover:border-blue-500 hover:bg-gray-800 sm:w-[48%]"
+              >
+                <span className="mb-2 text-xs font-bold text-gray-500 group-hover:text-blue-400">
+                  次の記事 &raquo;
+                </span>
+                <span className="line-clamp-2 text-sm font-bold text-gray-200 group-hover:text-blue-300">
+                  {newerArticle.title}
+                </span>
+              </Link>
+            )}
+          </div>
+        </div>
       </main>
     </>
   );
