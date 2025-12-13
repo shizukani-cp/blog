@@ -49,7 +49,7 @@ export default function RootLayout({
                   <a href="/blog/">ホーム</a>
                 </li>
                 <li>
-                  <a href="/blog/articles/20240803">自己紹介</a>
+                  <a href="/blog/articles/20240803/">自己紹介</a>
                 </li>
                 <li>
                   <a href="https://shizukani-cp.github.io/basestyle.css/">
