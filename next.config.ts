@@ -4,6 +4,7 @@ const nextConfig = {
   reactStrictMode: true,
   assetPrefix: branchName,
   basePath: branchName,
+  trailingSlash: true,
 };
 
 export default nextConfig;
