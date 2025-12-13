@@ -9,6 +9,7 @@ import rehypeRaw from "rehype-raw";
 import { Metadata } from "next";
 import { cache } from "react";
 import Link from "next/link";
+import "highlight.js/styles/github-dark.css";
 
 interface Props {
   params: { slug: string };
