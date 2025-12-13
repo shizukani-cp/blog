@@ -6,21 +6,18 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
-
-function formatDate(date: number) {
-  const date_s = date.toString();
-  const year = parseInt(date_s.substring(0, 4), 10);
-  const month = parseInt(date_s.substring(4, 6), 10);
-  const day = parseInt(date_s.substring(6, 8), 10);
-  return `${year}年${month.toString().padStart(2, "0")}月${day
-    .toString()
-    .padStart(2, "0")
-    }日`;
-}
+import { Metadata } from "next";
+import { cache } from "react";
 
 interface Props {
   params: { slug: string };
 }
+
+type Heading = {
+  id: string;
+  text: string;
+  level: number;
+};
 
 const LEVEL_AND_SIZE: Record<number, number> = {
   1: 25,
@@ -31,22 +28,14 @@ const LEVEL_AND_SIZE: Record<number, number> = {
   6: 8,
 };
 
-type Heading = {
-  id: string;
-  text: string;
-  level: number;
-};
-
-export async function generateStaticParams() {
-  const articlesDir = path.join(process.cwd(), "articles");
-  const fileNames = fs.readdirSync(articlesDir).filter((name) =>
-    name.endsWith(".md")
-  );
-
-  return fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "");
-    return { slug };
-  });
+function formatDate(date: number) {
+  const date_s = date.toString();
+  const year = parseInt(date_s.substring(0, 4), 10);
+  const month = parseInt(date_s.substring(4, 6), 10);
+  const day = parseInt(date_s.substring(6, 8), 10);
+  return `${year}年${month.toString().padStart(2, "0")}月${day
+    .toString()
+    .padStart(2, "0")}日`;
 }
 
 function extractHeadings(markdown: string): Heading[] {
@@ -60,6 +49,55 @@ function extractHeadings(markdown: string): Heading[] {
     headings.push({ id, text, level });
   }
   return headings;
+}
+
+const getArticle = cache(async (slug: string) => {
+  const fullPath = path.join(process.cwd(), "articles", `${slug}.md`);
+
+  if (!fs.existsSync(fullPath)) {
+    return null;
+  }
+
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  return matter(fileContents);
+});
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticle(slug);
+
+  if (!article) {
+    return {
+      title: "記事が見つかりません",
+    };
+  }
+
+  const { data } = article;
+
+  return {
+    title: `${data.title} | 静カニのブログ`,
+    description: data.description || "記事の詳細です",
+    openGraph: {
+      title: data.title,
+      description: data.description,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  const articlesDir = path.join(process.cwd(), "articles");
+  const fileNames = fs.readdirSync(articlesDir).filter((name) =>
+    name.endsWith(".md")
+  );
+
+  return fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.md$/, "");
+    return { slug };
+  });
 }
 
 function Index({ headings }: { headings: Heading[] }) {
@@ -81,15 +119,13 @@ function Index({ headings }: { headings: Heading[] }) {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const fullPath = path.join(process.cwd(), "articles", `${slug}.md`);
+  const article = await getArticle(slug);
 
-  if (!fs.existsSync(fullPath)) {
+  if (!article) {
     notFound();
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-
+  const { data, content } = article;
   const headings = extractHeadings(content);
 
   const contentWithIds = content.replace(
@@ -98,7 +134,7 @@ export default async function ArticlePage({ params }: Props) {
       const level = hashes.length;
       const id = encodeURIComponent(title.trim());
       return `<h${level} id="${id}">${title}</h${level}>`;
-    },
+    }
   );
 
   return (
