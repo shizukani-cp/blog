@@ -5,6 +5,7 @@ const nextConfig = {
   assetPrefix: branchName,
   basePath: branchName,
   trailingSlash: true,
+  output: 'export',
 };
 
 export default nextConfig;
