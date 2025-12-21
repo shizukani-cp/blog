@@ -118,3 +118,7 @@ main.article ul {
   list-style: disc;
   padding-left: 40px;
 }
+
+main.articles ol {
+  padding-left: 40px;
+}
