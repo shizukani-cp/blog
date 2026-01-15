@@ -47,13 +47,16 @@ function formatDate(date: number) {
 }
 
 function extractHeadings(markdown: string): Heading[] {
+  const cleanMarkdown = markdown.replace(/```[\s\S]*?```/g, '');
+
   const headingRegex = /^(#{1,6})\s+(.+)$/gm;
   const headings: Heading[] = [];
   let match;
-  while ((match = headingRegex.exec(markdown)) !== null) {
+
+  while ((match = headingRegex.exec(cleanMarkdown)) !== null) {
     const level = match[1].length;
     const text = match[2].trim();
-    const id = encodeURIComponent(text.trim());
+    const id = encodeURIComponent(text);
     headings.push({ id, text, level });
   }
   return headings;
@@ -152,15 +155,6 @@ export default async function ArticlePage({ params }: Props) {
   const newerArticle = allArticles[currentIndex - 1] || null;
   const olderArticle = allArticles[currentIndex + 1] || null;
 
-  const contentWithIds = content.replace(
-    /^(#{1,6})\s+(.+)$/gm,
-    (_m, hashes, title) => {
-      const level = hashes.length;
-      const id = encodeURIComponent(title.trim());
-      return `<h${level} id="${id}">${title}</h${level}>`;
-    }
-  );
-
   return (
     <>
       <aside id="sidebar">
@@ -173,8 +167,16 @@ export default async function ArticlePage({ params }: Props) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight, rehypeRaw]}
+          components={{
+            h1: ({ children }) => <h1 id={encodeURIComponent(String(children))}>{children}</h1>,
+            h2: ({ children }) => <h2 id={encodeURIComponent(String(children))}>{children}</h2>,
+            h3: ({ children }) => <h3 id={encodeURIComponent(String(children))}>{children}</h3>,
+            h4: ({ children }) => <h4 id={encodeURIComponent(String(children))}>{children}</h4>,
+            h5: ({ children }) => <h5 id={encodeURIComponent(String(children))}>{children}</h5>,
+            h6: ({ children }) => <h6 id={encodeURIComponent(String(children))}>{children}</h6>,
+          }}
         >
-          {contentWithIds}
+          {content}
         </ReactMarkdown>
 
         <div className="mt-12 border-t border-gray-800 pt-8">
