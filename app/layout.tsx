@@ -17,13 +17,14 @@ export const metadata: Metadata = {
       "application/rss+xml": "/blog/rss.xml",
     },
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   other: {
     "charset": "UTF-8",
   },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
