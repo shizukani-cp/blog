@@ -70,8 +70,9 @@ const getArticle = cache(async (slug: string) => {
 
 const getArticleList = cache(async (): Promise<ArticleMeta[]> => {
   const articlesDir = path.join(process.cwd(), "articles");
-  const article_regex = /^[0-9]{8}.md/
-  const fileNames = fs.readdirSync(articlesDir).filter((name) => article_regex.test(name));
+  const fileNames = fs.readdirSync(articlesDir).filter((file) => {
+    return fs.statSync(`articles/${file}`).isFile() && file.endsWith('.md');
+  });
 
   const articles = await Promise.all(
     fileNames.map(async (fileName) => {
