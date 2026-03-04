@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body>
+      <body className="prose">
         <header className="flex w-full items-center justify-between px-4 py-3 border-b">
           <a href="/blog/">
             <img

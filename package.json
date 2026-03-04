@@ -24,13 +24,16 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/rss": "^0.0.32",
+    "autoprefixer": "^10.4.27",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
-    "tailwindcss": "^4",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5",
     "wrangler": "^4.69.0"
   }
