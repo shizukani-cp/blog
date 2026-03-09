@@ -10,6 +10,10 @@ ol {
   padding-left: 1%;
 }
 
+main {
+  font-size: 1.1rem;
+}
+
 img {
   width: 100%;
   height: auto;
