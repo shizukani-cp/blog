@@ -132,6 +132,14 @@ export default async function ArticlePage({ params }: Props) {
   const newer = allArticles[currentIndex - 1];
   const older = allArticles[currentIndex + 1];
 
+  const btnBaseClass = [
+    "group flex w-full flex-col",
+    "rounded-lg border border-gray-700",
+    "p-4 transition-all",
+    "hover:border-blue-500 hover:bg-gray-800",
+    "sm:w-[48%] no-underline"
+  ].join(" ");
+
   return (
     <>
       <aside><TableOfContents headings={headings} /></aside>
@@ -158,7 +166,7 @@ export default async function ArticlePage({ params }: Props) {
             {older ? (
               <Link
                 href={`/articles/${older.slug}/`}
-                className="group flex w-full flex-col rounded-lg border border-gray-700 p-4 transition-all hover:border-blue-500 hover:bg-gray-800 sm:w-[48%] no-underline"
+                className={btnBaseClass}
               >
                 <span className="mb-2 text-xs font-bold text-gray-500 group-hover:text-blue-400">
                   &laquo; 前の記事
@@ -174,7 +182,7 @@ export default async function ArticlePage({ params }: Props) {
             {newer && (
               <Link
                 href={`/articles/${newer.slug}/`}
-                className="group flex w-full flex-col items-end rounded-lg border border-gray-700 p-4 text-right transition-all hover:border-blue-500 hover:bg-gray-800 sm:w-[48%] no-underline"
+                className={`${btnBaseClass} items-end text-right`}
               >
                 <span className="mb-2 text-xs font-bold text-gray-500 group-hover:text-blue-400">
                   次の記事 &raquo;
