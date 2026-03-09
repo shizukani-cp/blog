@@ -21,30 +21,12 @@ img.title-image {
   margin: auto;
 }
 
-main.article {
-  width: 70%;
-  padding: 10px;
-  float: left;
-}
-
 .back-next {
   width: 49%;
 }
 
 .date-right {
   float: right;
-}
-
-aside#sidebar {
-  position: fixed;
-  right: 0;
-  width: 20%;
-  float: right;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: scroll;
 }
 
 a.card {
