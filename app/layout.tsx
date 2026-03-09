@@ -67,7 +67,7 @@ export default function RootLayout({
             <span className="hidden text-xs text-gray-400 md:block">&copy; 2024 shizukani-cp</span>
           </div>
         </header>
-        <main className="prose">
+        <main className="prose max-w-none container mx-auto px-4">
           {children}
         </main>
         <Script
