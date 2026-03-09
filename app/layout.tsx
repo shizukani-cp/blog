@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body className="prose">
+      <body>
         <header className="flex w-full items-center justify-between px-4 py-3 border-b">
           <a href="/blog/">
             <img
@@ -67,7 +67,7 @@ export default function RootLayout({
             <span className="hidden text-xs text-gray-400 md:block">&copy; 2024 shizukani-cp</span>
           </div>
         </header>
-        <main>
+        <main className="prose">
           {children}
         </main>
         <Script
