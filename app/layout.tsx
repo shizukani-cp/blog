@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html className="dark">
       <body>
         <header className="flex w-full items-center justify-between px-4 py-3 border-b">
           <a href="/blog/">
@@ -67,7 +67,7 @@ export default function RootLayout({
             <span className="hidden text-xs text-gray-400 md:block">&copy; 2024 shizukani-cp</span>
           </div>
         </header>
-        <main className="prose max-w-none container mx-auto px-4">
+        <main className="prose prose-invert max-w-none container mx-auto px-4">
           {children}
         </main>
         <Script
