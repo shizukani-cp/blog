@@ -3,10 +3,16 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  line-height: 1.2;
+  line-height: 1.6;
   background-color: #1a1a1a;
   color: #ccc;
   margin: 0;
+}
+
+.prose p {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  line-height: 1.4 !important;
 }
 
 .container {
