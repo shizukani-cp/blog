@@ -53,11 +53,6 @@ export default function RootLayout({
                   <a href="/blog/articles/20240803/">自己紹介</a>
                 </li>
                 <li>
-                  <a href="https://shizukani-cp.github.io/basestyle.css/">
-                    basestyle.css
-                  </a>
-                </li>
-                <li>
                   <a href="https://shizukani-cp.github.io/htmlapps/">
                     色々ボックス
                   </a>
