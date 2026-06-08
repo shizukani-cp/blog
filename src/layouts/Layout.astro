@@ -1,23 +1,69 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import "../styles/globals.css";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+const title = "静カニのブログ";
+const description = "静カニのブログ";
+const siteUrl = "https://shizukani-cp.github.io/blog/";
+const ogImage = `${siteUrl}/blog/shizukani_title.png`;
+---
+
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <link rel="alternate" type="application/rss+xml" title={title} href="/blog/rss.xml" />
+
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-RHCWBF26WV"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RHCWBF26WV');
+    </script>
+  </head>
+  <body>
+    <header class="flex w-full items-center justify-between px-4 py-3 border-b">
+      <a href="/blog/">
+        <img
+          src="/blog/shizukani_title.png"
+          alt="タイトル画像"
+          class="title-image"
+        />
+      </a>
+      <div class="flex items-center gap-6">
+        <nav>
+          <ul class="flex gap-4">
+            <li>
+              <a href="/blog/">ホーム</a>
+            </li>
+            <li>
+              <a href="/blog/articles/20240803/">自己紹介</a>
+            </li>
+            <li>
+              <a href="https://shizukani-cp.github.io/htmlapps/">
+                色々ボックス
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <span class="hidden text-xs text-gray-400 md:block">&copy; 2024 shizukani-cp</span>
+      </div>
+    </header>
+
+    <main class="prose prose-invert max-w-none container mx-auto px-4">
+      <slot />
+    </main>
+  </body>
+</html>

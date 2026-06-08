@@ -1,0 +1,115 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const files = import.meta.glob('../../../articles/*.md', { eager: true });
+
+  const posts = Object.entries(files).map(([filePath, post]: [string, any]) => {
+    return {
+      ...post,
+      filePath,
+    };
+  });
+
+  posts.sort((a, b) => parseInt(b.frontmatter.date, 10) - parseInt(a.frontmatter.date, 10));
+
+  return posts.map((post, index) => {
+    const slug = post.filePath.split('/').pop()?.replace(/\.md$/, '') || '';
+
+    const newerPost = index > 0 ? posts[index - 1] : null;
+    const olderPost = index < posts.length - 1 ? posts[index + 1] : null;
+
+    const newer = newerPost ? {
+      slug: newerPost.filePath.split('/').pop()?.replace(/\.md$/, '') || '',
+      title: newerPost.frontmatter.title
+    } : null;
+
+    const older = olderPost ? {
+      slug: olderPost.filePath.split('/').pop()?.replace(/\.md$/, '') || '',
+      title: olderPost.frontmatter.title
+    } : null;
+
+    return {
+      params: { slug },
+      props: {
+        post,
+        older,
+        newer,
+      },
+    };
+  });
+}
+
+const { slug } = Astro.params;
+const { post, older, newer } = Astro.props;
+const { Content } = post;
+const headings = post.getHeadings ? post.getHeadings() : [];
+
+const LEVEL_AND_SIZE: Record<number, number> = {
+  1: 25, 2: 20, 3: 15, 4: 12, 5: 10, 6: 8,
+};
+
+const dateFormatter = new Intl.DateTimeFormat("ja-JP", {
+  year: "numeric", month: "2-digit", day: "2-digit",
+});
+
+function formatDate(dateNum: number) {
+  const s = dateNum.toString();
+  const date = new Date(`${s.substring(0, 4)}-${s.substring(4, 6)}-${s.substring(6, 8)}`);
+  return dateFormatter.format(date).replace(/\//g, "-");
+}
+
+const btnBaseClass = [
+  "group flex w-full flex-col",
+  "rounded-lg border border-gray-700",
+  "p-4 transition-all",
+  "hover:border-blue-500 hover:bg-gray-800",
+  "sm:w-[48%] no-underline"
+].join(" ");
+---
+
+<Layout>
+  <aside>
+    <nav id="sidebar">
+      {headings.map((h) => (
+        <p style={`font-size: ${LEVEL_AND_SIZE[h.depth] / 13}rem`}>
+          <a href={`#${encodeURIComponent(h.text)}`}>{h.text}</a>
+        </p>
+      ))}
+    </nav>
+  </aside>
+
+  <main class="article">
+    <h1>{post.frontmatter.title}</h1>
+    <time>{formatDate(post.frontmatter.date)}</time>
+    <Content />
+
+    <div class="mt-12 border-t border-gray-800 pt-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:justify-between">
+        {older ? (
+          <a href={`/blog/articles/${older.slug}/`} class={btnBaseClass}>
+            <span class="mb-2 text-xs font-bold text-gray-500 group-hover:text-blue-400">
+              &laquo; 前の記事
+            </span>
+            <span class="line-clamp-2 text-sm font-bold text-gray-200 group-hover:text-blue-300">
+              {older.title}
+            </span>
+          </a>
+        ) : (
+          <div class="hidden sm:block sm:w-[48%]" />
+        )}
+
+        {newer && (
+          <a href={`/blog/articles/${newer.slug}/`} class={`${btnBaseClass} items-end text-right`}>
+            <span class="mb-2 text-xs font-bold text-gray-500 group-hover:text-blue-400">
+              次の記事 &raquo;
+            </span>
+            <span class="line-clamp-2 text-sm font-bold text-gray-200 group-hover:text-blue-300">
+              {newer.title}
+            </span>
+          </a>
+        )}
+      </div>
+    </div>
+  </main>
+</Layout>
