@@ -4,7 +4,7 @@ import "../styles/globals.css";
 const title = "静カニのブログ";
 const description = "静カニのブログ";
 const siteUrl = "https://shizukani-cp.github.io/blog/";
-const ogImage = `${siteUrl}/blog/shizukani_title.png`;
+const ogImage = new URL("/shizukani_title.png", siteUrl).href;
 ---
 
 <!DOCTYPE html>
