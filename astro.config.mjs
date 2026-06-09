@@ -9,6 +9,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://shizukani-cp.github.io',
 
+  base: '/blog',
+
   vite: {
     plugins: [tailwindcss()]
   },
