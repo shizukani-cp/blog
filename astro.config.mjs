@@ -12,7 +12,10 @@ export default defineConfig({
   base: '/blog',
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    resolve: {
+      preserveSymlinks: true,
+    },
   },
 
   markdown: {

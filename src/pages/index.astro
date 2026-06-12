@@ -1,36 +1,23 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-function formatDate(date: number) {
-  const date_s = date.toString();
-  const year = parseInt(date_s.substring(0, 4), 10);
-  const month = parseInt(date_s.substring(4, 6), 10);
-  const day = parseInt(date_s.substring(6, 8), 10);
-  return `${year}年${month.toString().padStart(2, "0")}月${day.toString().padStart(2, "0")}日`;
-}
+const articles = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 
-const markdownFiles = import.meta.glob('../../articles/*.md', { eager: true });
-
-const articles = Object.entries(markdownFiles).map(([filePath, post]: [string, any]) => {
-  const slug = filePath.split('/').pop()?.replace(/\.md$/, '') || '';
-  return {
-    title: post.frontmatter.title,
-    description: post.frontmatter.description,
-    date: parseInt(post.frontmatter.date, 10),
-    slug,
-  };
-});
-
-articles.sort((a, b) => b.date - a.date);
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+};
 ---
 <Layout>
   <main id="pages">
     <div class="cards">
       {articles.map((article) => (
-        <a class="card" href={`/blog/articles/${article.slug}/`}>
-          <h3>{article.title}</h3>
-          <p>{article.description}</p>
-          <small>{formatDate(article.date)}</small>
+        <a class="card" href={`/blog/articles/${article.id}/`}>
+          <h3>{article.data.title}</h3>
+          <p>{article.data.description}</p>
+          <small>{formatDate(article.data.date)}</small>
         </a>
       ))}
     </div>

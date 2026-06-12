@@ -1,49 +1,36 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-  const files = import.meta.glob('../../../articles/*.md', { eager: true });
+  const posts = await getCollection('blog');
 
-  const posts = Object.entries(files).map(([filePath, post]: [string, any]) => {
-    return {
-      ...post,
-      filePath,
-    };
-  });
-
-  posts.sort((a, b) => parseInt(b.frontmatter.date, 10) - parseInt(a.frontmatter.date, 10));
+  posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
   return posts.map((post, index) => {
-    const slug = post.filePath.split('/').pop()?.replace(/\.md$/, '') || '';
-
     const newerPost = index > 0 ? posts[index - 1] : null;
     const olderPost = index < posts.length - 1 ? posts[index + 1] : null;
 
     const newer = newerPost ? {
-      slug: newerPost.filePath.split('/').pop()?.replace(/\.md$/, '') || '',
-      title: newerPost.frontmatter.title
+      slug: newerPost.id,
+      title: newerPost.data.title
     } : null;
 
     const older = olderPost ? {
-      slug: olderPost.filePath.split('/').pop()?.replace(/\.md$/, '') || '',
-      title: olderPost.frontmatter.title
+      slug: olderPost.id,
+      title: olderPost.data.title
     } : null;
 
     return {
-      params: { slug },
-      props: {
-        post,
-        older,
-        newer,
-      },
+      params: { slug: post.id },
+      props: { post, older, newer },
     };
   });
 }
 
-const { slug } = Astro.params;
 const { post, older, newer } = Astro.props;
-const { Content } = post;
-const headings = post.getHeadings ? post.getHeadings() : [];
+import { render } from 'astro:content';
+const { Content, headings } = await render(post);
 
 const LEVEL_AND_SIZE: Record<number, number> = {
   1: 25, 2: 20, 3: 15, 4: 12, 5: 10, 6: 8,
@@ -53,9 +40,7 @@ const dateFormatter = new Intl.DateTimeFormat("ja-JP", {
   year: "numeric", month: "2-digit", day: "2-digit",
 });
 
-function formatDate(dateNum: number) {
-  const s = dateNum.toString();
-  const date = new Date(`${s.substring(0, 4)}-${s.substring(4, 6)}-${s.substring(6, 8)}`);
+function formatDate(date: Date) {
   return dateFormatter.format(date).replace(/\//g, "-");
 }
 
@@ -67,11 +52,10 @@ const btnBaseClass = [
   "sm:w-[48%] no-underline"
 ].join(" ");
 ---
-
 <Layout>
   <aside>
     <nav id="sidebar">
-      {headings.map((h) => (
+    {headings.map((h) => (
         <p style={`font-size: ${LEVEL_AND_SIZE[h.depth] / 13}rem`}>
           <a href={`#${encodeURIComponent(h.text)}`}>{h.text}</a>
         </p>
@@ -80,8 +64,8 @@ const btnBaseClass = [
   </aside>
 
   <main class="article">
-    <h1>{post.frontmatter.title}</h1>
-    <time>{formatDate(post.frontmatter.date)}</time>
+    <h1>{post.data.title}</h1>
+    <time>{formatDate(post.data.date)}</time>
     <Content />
 
     <div class="mt-12 border-t border-gray-800 pt-8">
