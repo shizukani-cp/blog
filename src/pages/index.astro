@@ -17,6 +17,16 @@ const formatDate = (date: Date) => {
         <a class="card" href={`/blog/articles/${article.id}/`}>
           <h3>{article.data.title}</h3>
           <p>{article.data.description}</p>
+          {article.data.tags && article.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-3">
+              {article.data.tags.map((tag) => (
+                <span class="text-xs bg-gray-800 text-blue-400 px-2 py-0.5 rounded border border-gray-700">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
+
           <small>{formatDate(article.data.date)}</small>
         </a>
       ))}

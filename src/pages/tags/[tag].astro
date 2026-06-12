@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+
+  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-');
+};
+---
+<Layout>
+  <main>
+    <h2 class="text-2xl font-bold mb-6">「{tag}」タグの記事一覧</h2>
+    <div class="cards">
+      {posts.map((post) => (
+        <a class="card" href={`/blog/articles/${post.id}/`}>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+          <small>{formatDate(post.data.date)}</small>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>
