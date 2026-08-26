@@ -70,7 +70,7 @@ img.title-image {
   float: right;
 }
 
-a.card {
+div.card {
   display: block;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -82,22 +82,22 @@ a.card {
   transition: background 0.2s;
 }
 
-a.card:hover {
+div.card:hover {
   background: #2a2a2a
 }
 
-a.card h3 {
+div.card h3 {
   font-size: 1.8rem;
   margin: 0 0 8px 0;
 }
 
-a.card p {
+div.card p {
   color: #c0c0c0;
   font-size: 1rem;
   margin: 0 0 12px 0;
 }
 
-a.card small {
+div.card small {
   color: #a0a0a0;
 }
 

@@ -14,21 +14,23 @@ const formatDate = (date: Date) => {
   <main id="pages">
     <div class="cards">
       {articles.map((article) => (
-        <a class="card" href={`/blog/articles/${article.id}/`}>
-          <h3>{article.data.title}</h3>
+        <div class="card relative">
+          <a href={`/blog/articles/${article.id}/`} class="no-underline after:absolute after:inset-0">
+              <h3>{article.data.title}</h3>
+          </a>
           <p>{article.data.description}</p>
           {article.data.tags && article.data.tags.length > 0 && (
-            <div class="flex flex-wrap gap-2 mb-3">
+            <div class="flex flex-wrap gap-2 mb-3 relative z-10">
               {article.data.tags.map((tag) => (
-                <span class="text-xs bg-gray-800 text-blue-400 px-2 py-0.5 rounded border border-gray-700">
+                <a href={`/blog/tags/${tag}/`} class="text-xs bg-gray-800 text-blue-400 px-2 py-0.5 rounded border border-gray-700 no-underline">
                   #{tag}
-                </span>
+                </a>
               ))}
             </div>
           )}
 
           <small>{formatDate(article.data.date)}</small>
-        </a>
+        </div>
       ))}
     </div>
   </main>

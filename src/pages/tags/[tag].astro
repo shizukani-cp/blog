@@ -27,12 +27,24 @@ const formatDate = (date: Date) => {
   <main>
     <h2 class="text-2xl font-bold mb-6">「{tag}」タグの記事一覧</h2>
     <div class="cards">
-      {posts.map((post) => (
-        <a class="card" href={`/blog/articles/${post.id}/`}>
-          <h3>{post.data.title}</h3>
-          <p>{post.data.description}</p>
-          <small>{formatDate(post.data.date)}</small>
-        </a>
+      {posts.map((article) => (
+        <div class="card relative">
+          <a href={`/blog/articles/${article.id}/`} class="no-underline after:absolute after:inset-0">
+              <h3>{article.data.title}</h3>
+          </a>
+          <p>{article.data.description}</p>
+          {article.data.tags && article.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-3 relative z-10">
+              {article.data.tags.map((t) => (t === tag ? undefined :
+                <a href={`/blog/tags/${t}/`} class="text-xs bg-gray-800 text-blue-400 px-2 py-0.5 rounded border border-gray-700 no-underline">
+                  #{t}
+                </a>
+              ))}
+            </div>
+          )}
+
+          <small>{formatDate(article.data.date)}</small>
+        </div>
       ))}
     </div>
   </main>
