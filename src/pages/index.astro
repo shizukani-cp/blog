@@ -13,10 +13,24 @@ const formatDate = (date: Date) => {
 ---
 <Layout>
   <main id="pages">
+    <label class="toggleButton">
+      <input type="checkbox" id="toggleButton" class="toggleButton__checkbox" />
+    </label>
     <div class="cards">
       {articles.map((article) => (
         <Card article={article} />
       ))}
     </div>
   </main>
+    <script>
+    const toggle = document.getElementById("toggleButton");
+
+    toggle?.addEventListener("change", () => {
+      if (toggle.checked) {
+        document.body.classList.add("show-archived");
+      } else {
+        document.body.classList.remove("show-archived");
+      }
+    });
+  </script>
 </Layout>

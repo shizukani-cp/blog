@@ -14,6 +14,7 @@
       {
         packages.default = pkgs.mkShell {
           packages = with pkgs; [
+            nodejs_24
             tailwindcss-language-server
             typescript
             typescript-language-server

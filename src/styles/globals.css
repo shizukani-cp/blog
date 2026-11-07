@@ -62,6 +62,56 @@ img.title-image {
   margin: auto;
 }
 
+.toggleButton {
+  margin-left: auto;
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 28px;
+  border: 1px solid #555555;
+  border-radius: 9999px;
+  background-color: #dddddd;
+  cursor: pointer;
+}
+
+.toggleButton:has(:focus-visible) {
+  outline: auto;
+  outline: auto -webkit-focus-ring-color;
+}
+
+.toggleButton:has(:checked) {
+  background-color: #4ade80;
+}
+
+.toggleButton::before {
+  content: "アーカイブ済みの記事を表示する";
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.toggleButton__checkbox {
+  appearance: none;
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #555555;
+  border-radius: 9999px;
+  transform: translateY(-50%);
+  outline: none;
+  background-color: #ffffff;
+  transition: left 0.2s;
+  cursor: pointer;
+}
+
+.toggleButton__checkbox:checked {
+  left: calc(100% - 26px);
+}
+
 .back-next {
   width: 49%;
 }
@@ -86,9 +136,27 @@ div.card:hover {
   background: #2a2a2a
 }
 
+div.card.archived {
+  border: 1px solid #aaa;
+  background: #191919;
+  display: none;
+}
+
+body.show-archived .card.archived {
+  display: block;
+}
+
+div.card:hover {
+  background: #252525;
+}
+
 div.card h3 {
   font-size: 1.8rem;
   margin: 0 0 8px 0;
+}
+
+div.card.archived h3 {
+  color: #aaa;
 }
 
 div.card p {

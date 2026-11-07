@@ -14,6 +14,7 @@ const blog = defineCollection({
       return new Date(`${s.substring(0, 4)}-${s.substring(4, 6)}-${s.substring(6, 8)}`);
     }),
     tags: z.array(z.string()).default([]),
+    archived: z.boolean().default(false),
   }),
 });
 
